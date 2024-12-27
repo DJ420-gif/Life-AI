@@ -9,14 +9,15 @@
 body {
     font-family: Arial, sans-serif;
     line-height: 1.6;
-    background-color: #f4f4f4;
-    color: #333;
+    background-color: #ffffff;  /* Light mode default background */
+    color: #000000;  /* Light mode text color */
+    transition: background-color 0.3s, color 0.3s; /* Smooth transition */
 }
 
 /* Header Styling */
 header {
-    background-color: #333;
-    color: white;
+    background-color: #f4f4f4;
+    color: #333;
     padding: 10px 0;
     text-align: center;
 }
@@ -25,6 +26,7 @@ header h1 {
     font-size: 2.5em;
 }
 
+/* Navigation Styling */
 nav ul {
     list-style: none;
     padding: 0;
@@ -36,13 +38,13 @@ nav ul li {
 }
 
 nav ul li a {
-    color: white;
+    color: #007bff;
     text-decoration: none;
     font-size: 1.1em;
 }
 
 nav ul li a:hover {
-    color: #f4f4f4;
+    color: #0056b3;
 }
 
 /* Sections Styling */
@@ -81,8 +83,8 @@ ul li a:hover {
 footer {
     text-align: center;
     padding: 20px;
-    background-color: #333;
-    color: white;
+    background-color: #f4f4f4;
+    color: #333;
     position: relative;
     bottom: 0;
     width: 100%;
@@ -108,24 +110,6 @@ footer p {
         font-size: 2em;
     }
 }
-/* Light Mode (default) */
-body {
-    background-color: #ffffff;
-    color: #000000;
-}
-
-header, footer {
-    background-color: #f4f4f4;
-}
-
-a {
-    color: #007BFF;
-}
-
-button {
-    background-color: #4CAF50;
-    color: white;
-}
 
 /* Dark Mode */
 body.dark-mode {
@@ -144,4 +128,4 @@ a.dark-mode {
 button.dark-mode {
     background-color: #444;
     color: white;
-    }
+}
