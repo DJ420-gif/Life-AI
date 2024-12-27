@@ -108,3 +108,40 @@ footer p {
         font-size: 2em;
     }
 }
+/* Light Mode (default) */
+body {
+    background-color: #ffffff;
+    color: #000000;
+}
+
+header, footer {
+    background-color: #f4f4f4;
+}
+
+a {
+    color: #007BFF;
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+}
+
+/* Dark Mode */
+body.dark-mode {
+    background-color: #121212;
+    color: #ffffff;
+}
+
+header.dark-mode, footer.dark-mode {
+    background-color: #333;
+}
+
+a.dark-mode {
+    color: #80b3ff;
+}
+
+button.dark-mode {
+    background-color: #444;
+    color: white;
+    }
