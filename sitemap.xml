@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml"
+        xmlns:news="http://www.google.com/schemas/sitemap-news/0.9"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1"
+        xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
+    
+    <!-- Homepage -->
+    <url>
+        <loc>https://dj420-gif.github.io/Stydyhub10/</loc>
+        <lastmod>2024-12-27</lastmod> <!-- Last modified date -->
+        <changefreq>daily</changefreq>
+        <priority>1.0</priority>
+        <!-- Alternate language link example -->
+        <xhtml:link rel="alternate" hreflang="en" href="https://dj420-gif.github.io/Stydyhub10/"/>
+    </url>
+    
+    <!-- About Page -->
+    <url>
+        <loc>https://dj420-gif.github.io/Stydyhub10/about</loc>
+        <lastmod>2024-12-26</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.8</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://dj420-gif.github.io/Stydyhub10/about"/>
+    </url>
+
+    <!-- Contact Page -->
+    <url>
+        <loc>https://dj420-gif.github.io/Stydyhub10/contact</loc>
+        <lastmod>2024-12-25</lastmod>
+        <changefreq>monthly</changefreq>
+        <priority>0.6</priority>
+        <xhtml:link rel="alternate" hreflang="en" href="https://dj420-gif.github.io/Stydyhub10/contact"/>
+    </url>
+
+    <!-- Example of a News Article -->
+    <url>
+        <loc>https://dj420-gif.github.io/Stydyhub10/news-article</loc>
+        <lastmod>2024-12-20</lastmod>
+        <changefreq>hourly</changefreq>
+        <priority>0.9</priority>
+        <news:publication_date>2024-12-20T08:00:00+00:00</news:publication_date>
+        <news:title>Sample News Article</news:title>
+    </url>
+
+    <!-- Example of an Image URL -->
+    <url>
+        <loc>https://dj420-gif.github.io/Stydyhub10/image</loc>
+        <lastmod>2024-12-19</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.7</priority>
+        <image:image>
+            <image:loc>https://dj420-gif.github.io/Stydyhub10/images/sample.jpg</image:loc>
+            <image:caption>Sample Image Caption</image:caption>
+        </image:image>
+    </url>
+
+    <!-- Example of a Video URL -->
+    <url>
+        <loc>https://dj420-gif.github.io/Stydyhub10/video</loc>
+        <lastmod>2024-12-18</lastmod>
+        <changefreq>weekly</changefreq>
+        <priority>0.7</priority>
+        <video:video>
+            <video:thumbnail_loc>https://dj420-gif.github.io/Stydyhub10/thumbnails/video.jpg</video:thumbnail_loc>
+            <video:title>Sample Video</video:title>
+            <video:description>This is a description of the sample video.</video:description>
+            <video:content_loc>https://dj420-gif.github.io/Stydyhub10/video.mp4</video:content_loc>
+            <video:player_loc>https://dj420-gif.github.io/Stydyhub10/video-player</video:player_loc>
+        </video:video>
+    </url>
+</urlset>
