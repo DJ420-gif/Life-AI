@@ -8,7 +8,7 @@
     <meta name="author" content="Class 10 Study Hub">
     <meta property="og:title" content="Class 10 Study Hub">
     <meta property="og:description" content="Your one-stop destination for Class 10 study materials, notes, and solutions across all subjects.">
-    <meta property="og:image" content="https://www.class10studyhub.com/images/thumbnail.jpg"> <!-- Replace with your actual image URL -->
+    <meta property="og:image" content="https://www.class10studyhub.com/images/thumbnail.jpg">
     <meta property="og:url" content="https://www.class10studyhub.com">
     <meta name="robots" content="index, follow">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -39,6 +39,12 @@
                 <li><a href="#contact">Contact</a></li>
             </ul>
         </nav>
+        <div class="theme-switcher">
+            <button id="dark-light-toggle">Switch to Dark Mode</button>
+        </div>
+        <div class="search-bar">
+            <input type="text" id="search" placeholder="Search for study materials...">
+        </div>
     </header>
     <section id="home">
         <h2>Welcome to Class 10 Study Hub</h2>
@@ -131,23 +137,11 @@
                 <ul class="toggle-content">
                     <li>
                         <button class="toggle-btn">History</button>
-                        <li><a href="social-science/history/print-culture-and-modern-world.html">Print Culture and the Modern World</a></li>
-                    <section id="subjects">
-    <h2>Subjects</h2>
-    <ul>
-        <!-- Other subjects like Math, Science, English, etc. -->
-
-        <li>
-            <button class="toggle-btn">Social Science</button>
-            <ul class="toggle-content">
-                <li>
-                    <button class="toggle-btn">History</button>
-                    <ul class="toggle-content">
-                        <li><a href="social-science/history/print-culture-and-modern-world.html">Print Culture and the Modern World</a></li>
-                        <li><a href="social-science/history/nationalism-in-india.html">Nationalism in India</a></li> 
-                        <li><a href="social-science/history/nationalism-in-europe.html">The First World War</a></li>
-                        <li><a href="social-science/history/industrialisation.html">The Industrial Revolution</a></li> 
-                        <li><a href="social-science/history/the-making-of-a-global-world.html">The Great Depression</a></li> 
+                        <ul class="toggle-content">
+                            <li><a href="social-science/history/print-culture-and-modern-world.html">Print Culture and the Modern World</a></li>
+                            <li><a href="social-science/history/nationalism-in-india.html">Nationalism in India</a></li> 
+                            <li><a href="social-science/history/industrialisation.html">The Industrial Revolution</a></li> 
+                            <li><a href="social-science/history/the-making-of-a-global-world.html">The Great Depression</a></li> 
                         </ul>
                     </li>
                     <li>
@@ -191,6 +185,7 @@
         <h2>Contact Us</h2>
         <p>Email: support@class10studyhub.com</p>
     </footer>
+    <button id="back-to-top">Back to Top</button>
     <script>
         const toggleBtns = document.querySelectorAll('.toggle-btn');
         toggleBtns.forEach(button => {
@@ -199,6 +194,34 @@
                 content.style.display = content.style.display === 'block' ? 'none' : 'block';
             });
         });
+        // Dark/Light Mode Toggle
+        const darkLightToggle = document.getElementById('dark-light-toggle');
+        darkLightToggle.addEventListener('click', () => {
+            document.body.classList.toggle('dark-mode');
+            darkLightToggle.textContent = document.body.classList.contains('dark-mode') ? 'Switch to Light Mode' : 'Switch to Dark Mode';
+        });
+// Search Functionality
+        const searchInput = document.getElementById('search');
+        searchInput.addEventListener('input', (event) => {
+            const query = event.target.value.toLowerCase();
+            const links = document.querySelectorAll('a');
+            links.forEach(link => {
+                const text = link.textContent.toLowerCase();
+                link.style.display = text.includes(query) ? 'block' : 'none';
+            });
+        });
+        // Back to Top Button functionality
+        const backToTopBtn = document.getElementById('back-to-top');
+        window.onscroll = () => {
+            if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
+                backToTopBtn.style.display = 'block';
+            } else {
+                backToTopBtn.style.display = 'none';
+            }
+        };
+        backToTopBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
     </script>
 </body>
-</html>
+    </html>
