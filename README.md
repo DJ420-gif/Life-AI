@@ -1,4 +1,3 @@
-# .-Mywebsite
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -41,12 +40,10 @@
             </ul>
         </nav>
     </header>
-
     <section id="home">
         <h2>Welcome to Class 10 Study Hub</h2>
         <p>Your one-stop destination for Class 10 study materials and resources!</p>
     </section>
-
     <section id="subjects">
         <h2>Subjects</h2>
         <ul>
@@ -174,15 +171,12 @@
             </li>
         </ul>
     </section>
-
     <footer id="contact">
         <h2>Contact Us</h2>
         <p>Email: support@class10studyhub.com</p>
     </footer>
-
     <script>
         const toggleBtns = document.querySelectorAll('.toggle-btn');
-        
         toggleBtns.forEach(button => {
             button.addEventListener('click', () => {
                 const content = button.nextElementSibling;
