@@ -30,3 +30,15 @@ backToTopButton.addEventListener('click', () => {
         behavior: 'smooth'
     });
 });
+// Back to Top Button functionality
+const backToTopBtn = document.getElementById('back-to-top');
+window.onscroll = () => {
+    if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
+        backToTopBtn.style.display = 'block';
+    } else {
+        backToTopBtn.style.display = 'none';
+    }
+};
+backToTopBtn.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+});
