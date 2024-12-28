@@ -15,6 +15,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>Class 10 Study Hub</title>
     <link rel="stylesheet" href="styles.css">
+  <link rel="sitemap" type="application/xml" title="Sitemap" href="https://dj420-gif.github.io/Stydyhub10/sitemap.xml">
     <script type="application/ld+json">
     {
       "@context": "https://schema.org",
