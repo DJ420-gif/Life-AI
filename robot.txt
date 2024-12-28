@@ -1,0 +1,3 @@
+User-agent: *
+Disallow:
+Sitemap: https://dj420-gif.github.io/Stydyhub10/sitemap.xml
