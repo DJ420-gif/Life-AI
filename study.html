@@ -12,6 +12,7 @@
     <meta property="og:image" content="URL_to_image">
     <meta property="og:url" content="https://dj420-gif.github.io/Studymaster/">
     <meta property="og:type" content="website">
+    <meta name="robots" content="index, follow">
     <title>Class 10 Study Hub</title>
     <style>
         * {
@@ -51,7 +52,7 @@
             border: none;
             width: 300px;
         }
-     .search-bar button {
+        .search-bar button {
             padding: 10px;
             background-color: #fff;
             border: none;
@@ -105,8 +106,8 @@
             justify-content: space-around;
             flex-wrap: wrap;
             gap: 20px;
-        }
-        .subject-box {
+    }
+       .subject-box {
             width: 30%;
             padding: 20px;
             background-color: #fff;
@@ -114,13 +115,58 @@
             border-radius: 8px;
             text-align: center;
         }
-        .subject-box h4 {
+     .subject-box h4 {
             font-size: 24px;
             margin-bottom: 15px;
         }
         .subject-box p {
             font-size: 16px;
             color: #555;
+        }
+        .practice-section {
+            padding: 50px 20px;
+            background-color: #f4f7fc;
+            text-align: center;
+        }
+    .practice-section h3 {
+            font-size: 30px;
+            margin-bottom: 30px;
+        }
+        .practice-container {
+            display: flex;
+            justify-content: space-around;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        .practice-box {
+            width: 30%;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            text-align: center;
+        }
+        .practice-box h4 {
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+       .toggle-box {
+            width: 100%;
+            padding: 20px;
+            background-color: #fff;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            text-align: center;
+            cursor: pointer;
+        }
+       .toggle-box p {
+            display: none;
+            font-size: 16px;
+            color: #555;
+            margin-top: 15px;
+        }
+        .toggle-box.active p {
+            display: block;
         }
         footer {
             background-color: #333;
@@ -131,52 +177,13 @@
         footer a {
             color: #4A90E2;
             text-decoration: none;
-        }
-        footer a:hover {
+    }
+     footer a:hover {
             text-decoration: underline;
-        }
-        .testimonials {
-            background-color: #f4f7fc;
-            padding: 50px 20px;
-            text-align: center;
-        }
-        .testimonials h3 {
-            font-size: 30px;
-            margin-bottom: 30px;
-        }
-        .testimonial-boxes {
-            display: flex;
-            justify-content: space-around;
-            flex-wrap: wrap;
-            gap: 20px;
-        }
-        .testimonial-box {
-            background-color: #fff;
-            padding: 20px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            width: 30%;
-            border-radius: 8px;
-        }
-        .testimonial-box p {
-            font-size: 16px;
-            color: #555;
-            margin-bottom: 15px;
-        }
-        .testimonial-box span {
-            font-weight: bold;
-            color: #333;
-        }
-        .footer-links {
-            display: flex;
-            justify-content: center;
-            gap: 20px;
-        }
-        .footer-links a {
-            font-size: 16px;
         }
         @media (max-width: 768px) {
             .subject-box,
-            .testimonial-box {
+            .practice-box {
                 width: 100%;
             }
             .hero-section h2 {
@@ -192,7 +199,6 @@
         }
     </style>
 </head>
-
 <body>
     <!-- Header -->
     <header>
@@ -226,24 +232,48 @@
                 <h4>Social Science</h4>
                 <p>History, Geography, Civics, and Economics lessons.</p>
             </div>
+            <!-- Added new subject cards -->
+            <div class="subject-box">
+                <h4>Hindi</h4>
+                <p>Grammar, literature, and language skills.</p>
+            </div>
+            <div class="subject-box">
+                <h4>English</h4>
+                <p>Literature, grammar, writing skills, and comprehension.</p>
+            </div>
+            <div class="subject-box">
+                <h4>Information Technology</h4>
+                <p>Basic IT skills, programming, and digital literacy.</p>
+            </div>
         </div>
     </section>
-    <!-- Testimonials Section -->
-    <section class="testimonials">
-        <h3>What Students Are Saying</h3>
-        <div class="testimonial-boxes">
-            <div class="testimonial-box">
-                <p>"This platform has been a game changer for my studies. I now feel confident for my exams!"</p>
-                <span>- Rohan, Class 10</span>
+    <!-- Practice Section -->
+    <section class="practice-section">
+        <h3>Practice with the Best</h3>
+        <div class="practice-container">
+            <div class="practice-box">
+                <h4>Sample Papers</h4>
+                <p>Access high-quality sample papers for each subject.</p>
             </div>
-            <div class="testimonial-box">
-                <p>"The study material is very well-organized and easy to understand. Highly recommended!"</p>
-                <span>- Priya, Class 10</span>
+            <div class="practice-box">
+                <h4>Mock Tests</h4>
+                <p>Test your knowledge with mock exams to assess your preparation.</p>
             </div>
-            <div class="testimonial-box">
-                <p>"I love the interactive quizzes and mock tests. It really helps in exam preparation!"</p>
-                <span>- Aarav, Class 10</span>
+            <div class="practice-box">
+                <h4>Interactive Quizzes</h4>
+                <p>Engage in interactive quizzes to sharpen your skills.</p>
             </div>
+        </div>
+    </section>
+    <!-- Toggle Cards Section -->
+    <section class="practice-section">
+        <div class="toggle-box" onclick="this.classList.toggle('active')">
+            <h4>How to Top Marks in Boards</h4>
+            <p>Get the ultimate tips and strategies to score top marks in your board exams. Focus on time management, strategic studying, and active recall techniques.</p>
+        </div>
+        <div class="toggle-box" onclick="this.classList.toggle('active')">
+            <h4>Time Management</h4>
+            <p>Learn how to manage your time effectively during studies and exams. Our time-management techniques will help you stay organized and prepared.</p>
         </div>
     </section>
     <!-- Footer -->
@@ -254,7 +284,29 @@
             <a href="#">Terms of Service</a>
         </div>
     </footer>
-
+    <!-- Schema Markup -->
+    <script type="application/ld+json">
+        {
+            "@context": "https://schema.org",
+            "@type": "Website",
+            "name": "Class 10 Study Hub",
+            "url": "https://dj420-gif.github.io/Studymaster/",
+            "description": "Comprehensive resources for students to excel in Class 10 exams. Includes study materials, mock tests, sample papers, and more.",
+            "publisher": {
+                "@type": "Organization",
+                "name": "Class 10 Study Hub"
+            }
+        }
+    </script>
+    <script>
+        // Toggle functionality for the boards and time management cards
+        const toggleCards = document.querySelectorAll('.toggle-box');
+        toggleCards.forEach(card => {
+            card.addEventListener('click', () => {
+                card.classList.toggle('active');
+            });
+        });
+    </script>
 </body>
 
     </html>
