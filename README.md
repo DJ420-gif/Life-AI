@@ -1,184 +1,260 @@
+<!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Class 10 Study Hub - Modern study materials and solutions for Class 10 students.">
-    <title>Class 10 Study Hub | Advanced Features</title>
+    <meta name="description" content="Class 10 Study Hub - Comprehensive resources for students to excel. Free study materials, mock tests, and more!">
+    <meta name="keywords" content="Class 10, Study Hub, Educational Resources, Study Materials, Online Learning, Mathematics, Science, Social Science, English, Hindi, CBSE, ICSE">
+    <meta name="author" content="Class 10 Study Hub">
+    <meta property="og:title" content="Class 10 Study Hub">
+    <meta property="og:description" content="Free and comprehensive resources to excel in Class 10 studies.">
+    <meta property="og:image" content="URL_to_image">
+    <meta property="og:url" content="https://dj420-gif.github.io/Studymaster/">
+    <meta property="og:type" content="website">
+    <title>Class 10 Study Hub</title>
     <style>
-        /* Global Styling */
-        body {
-            font-family: Arial, sans-serif;
+        * {
             margin: 0;
             padding: 0;
-            transition: background-color 0.3s, color 0.3s;
+            box-sizing: border-box;
         }
-        body.dark-mode {
-            background-color: #121212;
-            color: #ffffff;
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f4f7fc;
+            color: #333;
+            line-height: 1.6;
+            overflow-x: hidden;
         }
         header {
-            background: linear-gradient(90deg, #4CAF50, #66BB6A);
+            background-color: #4A90E2;
             color: white;
             padding: 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
-        .dashboard {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin: 20px;
+        .logo h1 {
+            font-size: 26px;
+            font-weight: bold;
+            letter-spacing: 1px;
         }
-        .card {
-            background: white;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            transition: transform 0.3s;
+        .search-bar {
+            display: flex;
+            align-items: center;
         }
-        .card:hover {
-            transform: scale(1.05);
+        .search-bar input[type="text"] {
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 4px;
+            border: none;
+            width: 300px;
         }
-        footer {
-            background: #333;
+     .search-bar button {
+            padding: 10px;
+            background-color: #fff;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+        .search-bar button:hover {
+            background-color: #e2e2e2;
+        }
+        .hero-section {
+            background-image: url('https://via.placeholder.com/1500x800');
+            background-size: cover;
+            background-position: center;
             color: white;
             text-align: center;
-            padding: 10px 0;
+            padding: 100px 20px;
         }
-        /* Chatbot Styling */
-        .chatbot {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            width: 60px;
-            height: 60px;
-            background: #4CAF50;
-            border-radius: 50%;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            display: flex;
-            justify-content: center;
-            align-items: center;
+        .hero-section h2 {
+            font-size: 45px;
+            font-weight: bold;
+        }
+        .hero-section p {
+            font-size: 20px;
+            margin: 20px 0;
+            font-style: italic;
+        }
+        .cta-btn {
+            padding: 15px 30px;
+            font-size: 18px;
+            border-radius: 30px;
+            background-color: #f39c12;
+            color: white;
+            text-transform: uppercase;
+            border: none;
             cursor: pointer;
         }
-        .chatbot-icon {
-            color: white;
-            font-size: 1.5rem;
+        .cta-btn:hover {
+            background-color: #e67e22;
         }
-        .chatbot-popup {
-            position: fixed;
-            bottom: 100px;
-            right: 20px;
-            width: 300px;
-            background: white;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            border-radius: 10px;
+        .about-section {
+            padding: 50px 20px;
+            background-color: #fff;
+            text-align: center;
+        }
+        .about-section h3 {
+            font-size: 30px;
+            margin-bottom: 30px;
+        }
+        .subject-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .subject-box {
+            width: 30%;
             padding: 20px;
-            display: none;
+            background-color: #fff;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            text-align: center;
         }
-        .chatbot-popup.active {
-            display: block;
+        .subject-box h4 {
+            font-size: 24px;
+            margin-bottom: 15px;
         }
-        .chatbot-header {
+        .subject-box p {
+            font-size: 16px;
+            color: #555;
+        }
+        footer {
+            background-color: #333;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+        footer a {
+            color: #4A90E2;
+            text-decoration: none;
+        }
+        footer a:hover {
+            text-decoration: underline;
+        }
+        .testimonials {
+            background-color: #f4f7fc;
+            padding: 50px 20px;
+            text-align: center;
+        }
+        .testimonials h3 {
+            font-size: 30px;
+            margin-bottom: 30px;
+        }
+        .testimonial-boxes {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .testimonial-box {
+            background-color: #fff;
+            padding: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 30%;
+            border-radius: 8px;
+        }
+        .testimonial-box p {
+            font-size: 16px;
+            color: #555;
+            margin-bottom: 15px;
+        }
+        .testimonial-box span {
             font-weight: bold;
-            margin-bottom: 10px;
+            color: #333;
         }
-        .chatbot-input {
-            width: calc(100% - 40px);
-            padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            margin-top: 10px;
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        .footer-links a {
+            font-size: 16px;
+        }
+        @media (max-width: 768px) {
+            .subject-box,
+            .testimonial-box {
+                width: 100%;
+            }
+            .hero-section h2 {
+                font-size: 30px;
+            }
+            .hero-section p {
+                font-size: 18px;
+            }
+            .cta-btn {
+                font-size: 16px;
+                padding: 12px 24px;
+            }
         }
     </style>
 </head>
+
 <body>
+    <!-- Header -->
     <header>
-        <h1>Class 10 Study Hub</h1>
-        <button onclick="toggleTheme()">Light/Dark Mode</button>
+        <div class="logo">
+            <h1>Class 10 Study Hub</h1>
+        </div>
+        <div class="search-bar">
+            <input type="text" placeholder="Search for study material...">
+            <button>Search</button>
+        </div>
     </header>
-    <div class="container">
-        <!-- User Profile Section -->
-        <section id="profile">
-            <h2>Welcome, <span id="username">Guest</span>!</h2>
-            <button onclick="login()">Login/Signup</button>
-        </section>
-        <!-- Dashboard Section -->
-        <h2>Subjects</h2>
-        <div class="dashboard">
-            <div class="card" onclick="navigateTo('Math')">
-                <h3>Math</h3>
-                <p>Master formulas, practice tests, and solutions.</p>
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <h2>Transform Your Learning Journey with Class 10 Study Hub</h2>
+        <p>Access comprehensive study materials, practice papers, and more to excel in your exams!</p>
+        <button class="cta-btn">Get Started</button>
+    </section>
+    <!-- About Section -->
+    <section class="about-section">
+        <h3>Study Materials for Every Subject</h3>
+        <div class="subject-container">
+            <div class="subject-box">
+                <h4>Mathematics</h4>
+                <p>Concepts, formulas, solved examples, and practice papers.</p>
             </div>
-            <div class="card" onclick="navigateTo('Science')">
-                <h3>Science</h3>
-                <p>Explore notes, diagrams, and experiments.</p>
+            <div class="subject-box">
+                <h4>Science</h4>
+                <p>Physics, Chemistry, and Biology – detailed explanations and experiments.</p>
             </div>
-            <div class="card" onclick="navigateTo('English')">
-                <h3>English</h3>
-                <p>Improve grammar, comprehension, and writing.</p>
-            </div>
-            <div class="card" onclick="navigateTo('Social Science')">
-                <h3>Social Science</h3>
-                <p>Learn history, geography, and economics.</p>
+            <div class="subject-box">
+                <h4>Social Science</h4>
+                <p>History, Geography, Civics, and Economics lessons.</p>
             </div>
         </div>
-        <!-- Progress Tracker -->
-        <h2>Progress Tracker</h2>
-        <div>
-            <p><strong>Chapters Completed:</strong> 10/20</p>
-            <progress value="10" max="20"></progress>
+    </section>
+    <!-- Testimonials Section -->
+    <section class="testimonials">
+        <h3>What Students Are Saying</h3>
+        <div class="testimonial-boxes">
+            <div class="testimonial-box">
+                <p>"This platform has been a game changer for my studies. I now feel confident for my exams!"</p>
+                <span>- Rohan, Class 10</span>
+            </div>
+            <div class="testimonial-box">
+                <p>"The study material is very well-organized and easy to understand. Highly recommended!"</p>
+                <span>- Priya, Class 10</span>
+            </div>
+            <div class="testimonial-box">
+                <p>"I love the interactive quizzes and mock tests. It really helps in exam preparation!"</p>
+                <span>- Aarav, Class 10</span>
+            </div>
         </div>
-        <!-- Chatbot Section -->
-        <div class="chatbot" onclick="toggleChatbot()">
-            <span class="chatbot-icon">💬</span>
-        </div>
-        <div class="chatbot-popup" id="chatbot-popup">
-            <div class="chatbot-header">Chatbot Assistant</div>
-            <div id="chatbot-output"></div>
-            <input
-                type="text"
-                id="chatbot-input"
-                class="chatbot-input"
-                placeholder="Ask me anything..."
-                onkeydown="if(event.key === 'Enter') handleChatInput()"
-            />
-        </div>
-    </div>
+    </section>
+    <!-- Footer -->
     <footer>
-        <p>&copy; 2025 Class 10 Study Hub</p>
+        <p>&copy; 2025 Class 10 Study Hub. All rights reserved.</p>
+        <div class="footer-links">
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Service</a>
+        </div>
     </footer>
-    <script>
-        // Toggle Light/Dark Mode
-        function toggleTheme() {
-            document.body.classList.toggle('dark-mode');
-        }
-        // Navigate to a Section
-        function navigateTo(subject) {
-            alert(`Navigating to ${subject} resources!`);
-        }
-        // Chatbot Functionality
-        function toggleChatbot() {
-            const chatbotPopup = document.getElementById('chatbot-popup');
-            chatbotPopup.classList.toggle('active');
-        }
-        function handleChatInput() {
-            const input = document.getElementById('chatbot-input').value;
-            const output = document.getElementById('chatbot-output');
-            if (input) {
-                const response = `You asked: "${input}" (I'm still learning, but I'll help soon!)`;
-                output.innerHTML += `<p>${response}</p>`;
-                document.getElementById('chatbot-input').value = '';
-            }
-        }
-        // Login Functionality
-        function login() {
-            const username = prompt("Enter your name:");
-            if (username) {
-                document.getElementById('username').textContent = username;
-            }
-        }
-    </script>
+
 </body>
+
 </html>
