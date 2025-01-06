@@ -1,312 +1,275 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Class 10 Study Hub - Comprehensive resources for students to excel. Free study materials, mock tests, and more!">
-    <meta name="keywords" content="Class 10, Study Hub, Educational Resources, Study Materials, Online Learning, Mathematics, Science, Social Science, English, Hindi, CBSE, ICSE">
-    <meta name="author" content="Class 10 Study Hub">
-    <meta property="og:title" content="Class 10 Study Hub">
-    <meta property="og:description" content="Free and comprehensive resources to excel in Class 10 studies.">
-    <meta property="og:image" content="URL_to_image">
-    <meta property="og:url" content="https://dj420-gif.github.io/Studymaster/">
-    <meta property="og:type" content="website">
-    <meta name="robots" content="index, follow">
-    <title>Class 10 Study Hub</title>
+    <title>Class 10 Science Notes: Chapter 1 - Chemical Reactions and Equations</title>
+    <link rel="canonical" href="https://github.com/DJ420-gif/Studymaster/blob/main/class10notes/chemicalreactionsandequationsnotes.html">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
+        .reaction {
+            color: blue;        /* Sets the text color to blue */
+            font-weight: bold;  /* Makes the text bold */
+            font-style: italic; /* Makes the text italic */
         }
         body {
-            font-family: 'Roboto', sans-serif;
-            background-color: #f4f7fc;
-            color: #333;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
             line-height: 1.6;
-            overflow-x: hidden;
+            background-color: #f4f4f4;
+            color: #333;
         }
-        header {
-            background-color: #4A90E2;
-            color: white;
+        .container {
+            max-width: 900px;
+            margin: 20px auto;
+            background: #fff;
             padding: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-        .logo h1 {
-            font-size: 26px;
-            font-weight: bold;
-            letter-spacing: 1px;
-        }
-        .search-bar {
-            display: flex;
-            align-items: center;
-        }
-        .search-bar input[type="text"] {
-            padding: 10px;
-            font-size: 16px;
-            border-radius: 4px;
-            border: none;
-            width: 300px;
-        }
-        .search-bar button {
-            padding: 10px;
-            background-color: #fff;
-            border: none;
-            cursor: pointer;
-            border-radius: 4px;
-        }
-        .search-bar button:hover {
-            background-color: #e2e2e2;
-        }
-        .hero-section {
-            background-image: url('https://via.placeholder.com/1500x800');
-            background-size: cover;
-            background-position: center;
-            color: white;
-            text-align: center;
-            padding: 100px 20px;
-        }
-        .hero-section h2 {
-            font-size: 45px;
-            font-weight: bold;
-        }
-        .hero-section p {
-            font-size: 20px;
-            margin: 20px 0;
-            font-style: italic;
-        }
-        .cta-btn {
-            padding: 15px 30px;
-            font-size: 18px;
-            border-radius: 30px;
-            background-color: #f39c12;
-            color: white;
-            text-transform: uppercase;
-            border: none;
-            cursor: pointer;
-        }
-        .cta-btn:hover {
-            background-color: #e67e22;
-        }
-        .about-section {
-            padding: 50px 20px;
-            background-color: #fff;
-            text-align: center;
-        }
-        .about-section h3 {
-            font-size: 30px;
-            margin-bottom: 30px;
-        }
-        .subject-container {
-            display: flex;
-            justify-content: space-around;
-            flex-wrap: wrap;
-            gap: 20px;
-    }
-       .subject-box {
-            width: 30%;
-            padding: 20px;
-            background-color: #fff;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             border-radius: 8px;
-            text-align: center;
-        }
-     .subject-box h4 {
-            font-size: 24px;
-            margin-bottom: 15px;
-        }
-        .subject-box p {
-            font-size: 16px;
-            color: #555;
-        }
-        .practice-section {
-            padding: 50px 20px;
-            background-color: #f4f7fc;
-            text-align: center;
-        }
-    .practice-section h3 {
-            font-size: 30px;
-            margin-bottom: 30px;
-        }
-        .practice-container {
-            display: flex;
-            justify-content: space-around;
-            gap: 20px;
-            flex-wrap: wrap;
-        }
-        .practice-box {
-            width: 30%;
-            padding: 20px;
-            background-color: #fff;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-            text-align: center;
-        }
-        .practice-box h4 {
-            font-size: 24px;
-            margin-bottom: 15px;
-        }
-       .toggle-box {
-            width: 100%;
-            padding: 20px;
-            background-color: #fff;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            border-radius: 8px;
-            text-align: center;
-            cursor: pointer;
-        }
-       .toggle-box p {
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        } 
+        .quiz-container {
             display: none;
-            font-size: 16px;
-            color: #555;
-            margin-top: 15px;
-        }
-        .toggle-box.active p {
-            display: block;
-        }
-        footer {
-            background-color: #333;
-            color: white;
+            margin-top: 30px;
             padding: 20px;
+            background: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            animation: fadeIn 1s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .quiz-question {
+            margin-bottom: 20px;
+        }
+        .quiz-options label {
+            display: block;
+            margin-bottom: 10px;
+            cursor: pointer;
+        }
+        .quiz-options input {
+            margin-right: 10px;
+        }
+        .toggle-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #0056b3;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .toggle-button:hover {
+            background-color: #003d80; 
+        } 
+        .submit-button {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #0056b3;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .submit-button:hover {
+            background-color: #003d80;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 10px;
+            background: #e7f7e7;
+            color: #2e7d32;
+            border: 1px solid #c8e6c9;
+            border-radius: 5px;
+            display: none;
+        }
+        h1, h2, h3 {
+            color: #0056b3;
+        }
+        ul {
+            margin: 10px 0;
+            padding: 0 20px;
+        }
+        li {
+            margin-bottom: 5px;
+        }
+        .image {
             text-align: center;
+            margin: 20px 0;
         }
-        footer a {
-            color: #4A90E2;
+        img {
+            max-width: 100%;
+            border-radius: 8px;
+        }
+        .back-button {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 10px 15px;
+            background-color: #0056b3;
+            color: #fff;
             text-decoration: none;
-    }
-     footer a:hover {
-            text-decoration: underline;
+            border-radius: 5px;
+            transition: background-color 0.3s;
         }
-        @media (max-width: 768px) {
-            .subject-box,
-            .practice-box {
-                width: 100%;
-            }
-            .hero-section h2 {
-                font-size: 30px;
-            }
-            .hero-section p {
-                font-size: 18px;
-            }
-            .cta-btn {
-                font-size: 16px;
-                padding: 12px 24px;
-            }
+        .back-button:hover {
+            background-color: #003d80;
         }
     </style>
 </head>
 <body>
-    <!-- Header -->
-    <header>
-        <div class="logo">
-            <h1>Class 10 Study Hub</h1>
+    <div class="container">
+        <h1>Class 10 Science Notes</h1>
+        <h2>Chapter 2: Acid Bases and Salts </h2>
+        <p>
+            CBSE Class 10 Science Notes Chapter 2 <strong>Acid Bases and Salts </strong> 
+            provides a concise summary for quick revision. Key points include characteristics of acids and Bases, characteristics of chemical reactions of acid and bases, and salts formed and also the importance of pH.
+        </p>
+        <h3>Acid</h3>
+        <p>
+            <li>Taste sour and change blue litmus paper to red.</li>
+            <li>Highly reactive with metals and release hydrogen gas.</li>
+            <li>Common acids include hydrochloric acid (HCl), sulfuric acid (H₂SO₄), and acetic acid (CH₃COH)</li>
+            <li>Definition: Acids are compounds which release H<sup>+</sup> ions on hydrolysis or reaction with water.</li>
+            <li>Acid solution conducts electricity as they release ions which are essential for conduction of electricity.</li>
+            Now Acids are of mainly two types - 
+            <li>(i) Natural Acids: Acids which are obtained from natural sources are called Natural Acids or Organic Acids. Examples: Methanoic acid (HCOOH), Acetic acid (CH3COOH), Oxalic acid (C2H2O4) etc.</li>
+            <li>(ii) Mineral Acids: Acids that are prepared from minerals are known as Mineral Acids. Examples: Hydrochloric acid (HCl), Sulphuric acid (H2SO4), Nitric acid (HNO3), Carbonic acid (H2CO3), Phosphoric acid (H3PO4) etc.</li>
+            <h4>Chemical of reaction of acids</h4>
+            <h5>Reaction of acid with metal</h5>
+            <li>Acids give hydrogen gas along with respective salt when they react with a metal.</li>
+            <li>Metal + Acid → Salt + Hydrogen</li>
+            Examples:
+            <li>Hydrogen gas and zinc chloride are formed when hydrochloric acid reacts with zinc metal.</li>
+            <p class="reaction">Zn + HCl &rarr; ZnCl<sub>2</sub> + H<sub>2</sub></p>
+            <h5>Reaction of acid with metal carbonates</h5>
+            <li>Acids give carbon dioxide gas and respective salts along with water when they react with metal carbonates.</li>
+            <li>Metal carbonate + Acid → Salt + Carbon dioxide + Water</li>
+            Examples:
+            <li>Hydrochloric acid gives carbon dioxide gas, sodium chloride along with water when reacts with sodium carbonate.</li>
+            <p class="reaction">Na<sub>2</sub>CO<sub>3</sub> &rarr; NaCl + CO<sub>2</sub> + H<sub>2</sub>O</p>
+            <h5>Reaction of acids with metal hydrogencarbonate</h5>
+            <li>Acids give carbon dioxide gas, respective salt and water when they react with metal hydrogen carbonate.</li>
+            <li>Acid + Metal hydrogen carbonate → Salt + Carbon dioxide + Water</li>
+            Example:
+            <li>Sulphuric acid gives sodium sulphate, Carbon dioxide gas and water when it reacts with sodium bicarbonate.</li> 
+            <p class="reaction">NaHCO<sub>3</sub> + H<sub>2</sub>SO<sub>4</sub> &rarr; Na<sub>2</sub>S + CO<sub>2</sub> + H<sub>2</sub>O</p>
+        </p>
+        <ul>
+            <h3>Bases</h3>
+            <p>
+                <li>Tastes bitter and change red litmus paper to blue.</li>
+                <li>Usually used to form soaps.</li>
+                <li>Common bases include sodium hydroxide, sodium carbonate, milk of magnesia, potassium hydroxide etc.</li>
+                <h4>Reactions of Bases</h4>
+                <h5>Reaction of Bases with metals</h5>
+                <li>Bases also form salt and hydrogen gas when they react with metal. But there are some metals which don't react with bases like gold, silver etc.</li>
+                <li>Base + Metal &rarr; Salt + Hydrogen gas</li>
+                <li>When sodium hydroxide reacts with Zinc it forms Sodium zincate and Hydrogen gas</li>
+                <p class="reaction">2NaOH + Zn &rarr; Na<sub>2</sub>ZnO<sub>2</sub> + H<sub>2</sub></p>
+                <h5>Reaction of Bases with metal carbonates</h5>
+                <li>Generally bases don't react with metal carbonates are also basic.</li>
+                <li>We have provided the table for the nature of metal or non-metal oxide carbonates etc. Go and check out the table as it will help in the reactions.</li>
+                Same with hydrogen carbonates.
+                <h4>Extras</h4>
+                <h5>Acids + Metallic Oxide &rarr; Salt + Water</h5>
+                <h5>Bases + Metallic Oxides &rarr; No reaction</h5>
+                <li>Except when bases react with the amphoteric metal oxides as they are both acidic and basic in nature.</li>
+                <h5>Acid + Non Metallic Oxide &rarr; No reaction</h5>
+                <h5>Bases + Non Metallic Oxide &rarr; Salt + Water</h5>
+                Know more about it.
+            </p>
+            <h3>How Acids and Bases react with each other</h3>
+            <li>When Acid and Base react with each other, they neutralize each other's effect and convert the solution to neutral only when acid and base are equally powerful. This is called neutralization.</li>
+            <p class="reaction">NaOH + HCl &rarr; NaCl + H<sub>2</sub>O</p>
+            <h3>What makes an Acid an Acid and a Base a Base?</h3>
+            <li>Now all the compounds which are acidic, the factor that would be common between them is the release of H<sup>+</sup> ions when they react with water.</li>
+            <li>Now the Base has the same thing but the different ion. The bases release OH<sub>-</sub> ion in the presence of water.</li>
+            <li>Due to these properties of Acids and Base, they are able to conduct electricity due to the presence of ions.</li>
+            <li>Now ethanol also whose chemical formula ends with OH don't conduct electricity because it doesn't get electrolyzed to release any ion.</li>
+            <li>For example, when diluted Sulphuric acid is added to Sodium Chloride HCl gas is produced and when we test it by a litmus paper there wouldn't be any change but if we add some water, it will change color.</li>
+            <p class="reaction">HCl + H<sub>2</sub>O &rarr; H<sub>3</sub>O<sup>+</sup> + Cl<sup>-</sup></p>
+            <p class="reaction">H<sup>+</sup> + H<sub>2</sub>O &rarr; H<sub>3</sub>O<sup>+</sup></p>
+            <li>Same with NaOH</li>
+            <p class="reaction">NaOH + H<sub>2</sub> &rarr; Na<sup>+</sup> + OH<sup>-</sup></p>
+            <li>Now all Bases do not dissolve in water like CuO but the soluble ones are called Alkali. Alkali are soapy to touch, bitter in taste and corrosive in nature. Examples are Sodium Hydroxide (NaOH), Potassium Hydroxide (KOH) etc.</li>
+        </ul>
+        <h3>Practice Questions</h3>
+        <ul>
+            <li>Define a chemical reaction and list its characteristics.</li>
+            <li>What is a balanced chemical equation? Why should chemical equations be balanced?</li>
+            <li>Explain oxidation and reduction with examples.</li>
+        </ul>
+        <a href="index.html" class="back-button">Go Back</a>
+    </div>
+    <!-- Toggle Button -->
+    <button class="toggle-button" onclick="toggleQuiz()">Show Quiz</button>
+    <!-- Quiz Section -->
+    <div class="quiz-container" id="quiz-container">
+        <h2>Test Your Knowledge</h2>
+        <div id="quiz">
+            <div class="quiz-question">
+                <h3>1. What is the pH of a neutral solution?</h3>
+                <div class="quiz-options">
+                    <label><input type="radio" name="q1" value="6"> 6</label>
+                    <label><input type="radio" name="q1" value="7"> 7</label>
+                    <label><input type="radio" name="q1" value="8"> 8</label>
+                    <label><input type="radio" name="q1" value="10"> 10</label>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <h3>2. Which gas is released when acids react with metals?</h3>
+                <div class="quiz-options">
+                    <label><input type="radio" name="q2" value="Oxygen"> Oxygen</label>
+                    <label><input type="radio" name="q2" value="Hydrogen"> Hydrogen</label>
+                    <label><input type="radio" name="q2" value="Nitrogen"> Nitrogen</label>
+                    <label><input type="radio" name="q2" value="Carbon dioxide"> Carbon dioxide</label>
+                </div>
+            </div>
+            <div class="quiz-question">
+                <h3>3. What is the taste of a base?</h3>
+                <div class="quiz-options">
+                    <label><input type="radio" name="q3" value="Sweet"> Sweet</label>
+                    <label><input type="radio" name="q3" value="Bitter"> Bitter</label>
+                    <label><input type="radio" name="q3" value="Sour"> Sour</label>
+                    <label><input type="radio" name="q3" value="Salty"> Salty</label>
+                </div>
+            </div>
+            <button class="submit-button" onclick="checkAnswers()">Submit Quiz</button>
+            <div class="result" id="result"></div>
         </div>
-        <div class="search-bar">
-            <input type="text" placeholder="Search for study material...">
-            <button>Search</button>
-        </div>
-    </header>
-    <!-- Hero Section -->
-    <section class="hero-section">
-        <h2>Transform Your Learning Journey with Class 10 Study Hub</h2>
-        <p>Access comprehensive study materials, practice papers, and more to excel in your exams!</p>
-        <button class="cta-btn">Get Started</button>
-    </section>
-    <!-- About Section -->
-    <section class="about-section">
-        <h3>Study Materials for Every Subject</h3>
-        <div class="subject-container">
-            <div class="subject-box">
-                <h4>Mathematics</h4>
-                <p>Concepts, formulas, solved examples, and practice papers.</p>
-            </div>
-            <div class="subject-box">
-                <h4>Science</h4>
-                <p>Physics, Chemistry, and Biology – detailed explanations and experiments.</p>
-            </div>
-            <div class="subject-box">
-                <h4>Social Science</h4>
-                <p>History, Geography, Civics, and Economics lessons.</p>
-            </div>
-            <!-- Added new subject cards -->
-            <div class="subject-box">
-                <h4>Hindi</h4>
-                <p>Grammar, literature, and language skills.</p>
-            </div>
-            <div class="subject-box">
-                <h4>English</h4>
-                <p>Literature, grammar, writing skills, and comprehension.</p>
-            </div>
-            <div class="subject-box">
-                <h4>Information Technology</h4>
-                <p>Basic IT skills, programming, and digital literacy.</p>
-            </div>
-        </div>
-    </section>
-    <!-- Practice Section -->
-    <section class="practice-section">
-        <h3>Practice with the Best</h3>
-        <div class="practice-container">
-            <div class="practice-box">
-                <h4>Sample Papers</h4>
-                <p>Access high-quality sample papers for each subject.</p>
-            </div>
-            <div class="practice-box">
-                <h4>Mock Tests</h4>
-                <p>Test your knowledge with mock exams to assess your preparation.</p>
-            </div>
-            <div class="practice-box">
-                <h4>Interactive Quizzes</h4>
-                <p>Engage in interactive quizzes to sharpen your skills.</p>
-            </div>
-        </div>
-    </section>
-    <!-- Toggle Cards Section -->
-    <section class="practice-section">
-        <div class="toggle-box" onclick="this.classList.toggle('active')">
-            <h4>How to Top Marks in Boards</h4>
-            <p>Get the ultimate tips and strategies to score top marks in your board exams. Focus on time management, strategic studying, and active recall techniques.</p>
-        </div>
-        <div class="toggle-box" onclick="this.classList.toggle('active')">
-            <h4>Time Management</h4>
-            <p>Learn how to manage your time effectively during studies and exams. Our time-management techniques will help you stay organized and prepared.</p>
-        </div>
-    </section>
-    <!-- Footer -->
-    <footer>
-        <p>&copy; 2025 Class 10 Study Hub. All rights reserved.</p>
-        <div class="footer-links">
-            <a href="#">Privacy Policy</a>
-            <a href="#">Terms of Service</a>
-        </div>
-    </footer>
-    <!-- Schema Markup -->
-    <script type="application/ld+json">
-        {
-            "@context": "https://schema.org",
-            "@type": "Website",
-            "name": "Class 10 Study Hub",
-            "url": "https://dj420-gif.github.io/Studymaster/",
-            "description": "Comprehensive resources for students to excel in Class 10 exams. Includes study materials, mock tests, sample papers, and more.",
-            "publisher": {
-                "@type": "Organization",
-                "name": "Class 10 Study Hub"
+    </div>
+    <script>
+        function toggleQuiz() {
+            const quizContainer = document.getElementById("quiz-container");
+            if (quizContainer.style.display === "none" || quizContainer.style.display === "") {
+                quizContainer.style.display = "block";
+            } else {
+                quizContainer.style.display = "none";
             }
         }
-    </script>
-    <script>
-        // Toggle functionality for the boards and time management cards
-        const toggleCards = document.querySelectorAll('.toggle-box');
-        toggleCards.forEach(card => {
-            card.addEventListener('click', () => {
-                card.classList.toggle('active');
-            });
-        });
+        function checkAnswers() {
+            const answers = {
+                q1: "7",
+                q2: "Hydrogen",
+                q3: "Bitter"
+            };
+            let score = 0;
+            for (const [question, correctAnswer] of Object.entries(answers)) {
+                const selectedOption = document.querySelector(`input[name="${question}"]:checked`);
+                if (selectedOption && selectedOption.value === correctAnswer) {
+                    score++;
+                    selectedOption.parentElement.classList.add("correct");
+                } else if (selectedOption) {
+                    selectedOption.parentElement.classList.add("incorrect");
+                }
+            }
+            const resultDiv = document.getElementById("result");
+            resultDiv.textContent = `You scored ${score} out of ${Object.keys(answers).length}`;
+            resultDiv.style.display = "block";
+        }
     </script>
 </body>
-
-</html>
+    </html>
