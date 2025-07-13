@@ -1,1 +1,115 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Birthday Surprise</title>
+  <style>
+    html, body { margin: 0; padding: 0; overflow: hidden; height: 100%; background: #f0f8ff; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+    #surpriseBtn {
+      position: absolute; top: 20px; left: 50%; transform: translateX(-50%);
+      padding: 1rem 2rem; font-size: 1.2rem; background: linear-gradient(45deg, #ff4081, #ff80ab);
+      border: none; border-radius: 2rem; color: white; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      transition: transform 0.2s;
+    }
+    #surpriseBtn:active { transform: translateX(-50%) scale(0.95); }
+    #message {
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+      font-size: 4rem; color: #ff4081; display: flex;
+    }
+    #message .letter {
+      display: inline-block; opacity: 0;
+      animation: dance 1s ease-in-out forwards;
+    }
+    @keyframes dance {
+      0% { transform: translateY(30px) rotate(0deg); opacity: 0; }
+      50% { transform: translateY(-10px) rotate(10deg); opacity: 1; }
+      100% { transform: translateY(0) rotate(-10deg); opacity: 1; }
+    }
+    canvas { position: absolute; top: 0; left: 0; }
+  </style>
+</head>
+<body>
+  <button id="surpriseBtn">Surprise!</button>
+  <div id="message"></div>
+  <canvas id="canvas"></canvas>  <script>
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+    let W = canvas.width = window.innerWidth;
+    let H = canvas.height = window.innerHeight;
+    window.addEventListener('resize', () => { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; });
 
+    class Particle {
+      constructor(x, y, type) {
+        this.x = x; this.y = y;
+        this.vx = (Math.random() - 0.5) * 2;
+        this.vy = Math.random() * -3 - 2;
+        this.size = 20 + Math.random() * 15;
+        this.type = type; // 'heart' or 'balloon'
+        this.life = 0;
+        this.ttl = 200 + Math.random() * 100;
+        this.hue = Math.random() * 360;
+      }
+      draw() {
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        if (this.type === 'heart') {
+          ctx.fillStyle = `hsl(${this.hue}, 80%, 60%)`;
+          ctx.beginPath();
+          const topCurveHeight = this.size * 0.3;
+          ctx.moveTo(0, topCurveHeight);
+          ctx.bezierCurveTo(0, topCurveHeight - this.size / 2, -this.size / 2, topCurveHeight - this.size / 2, -this.size / 2, topCurveHeight);
+          ctx.bezierCurveTo(-this.size / 2, topCurveHeight + this.size / 2, 0, topCurveHeight + this.size * 0.75, 0, this.size);
+          ctx.bezierCurveTo(0, topCurveHeight + this.size * 0.75, this.size / 2, topCurveHeight + this.size / 2, this.size / 2, topCurveHeight);
+          ctx.bezierCurveTo(this.size / 2, topCurveHeight - this.size / 2, 0, topCurveHeight - this.size / 2, 0, topCurveHeight);
+          ctx.closePath();
+          ctx.fill();
+        } else {
+          // balloon
+          ctx.fillStyle = `hsl(${this.hue}, 80%, 70%)`;
+          ctx.beginPath(); ctx.ellipse(0, 0, this.size*0.6, this.size, 0, 0, Math.PI*2); ctx.fill();
+          ctx.strokeStyle = '#555'; ctx.beginPath(); ctx.moveTo(0, this.size); ctx.lineTo(0, this.size + 30); ctx.stroke();
+        }
+        ctx.restore();
+      }
+      update() {
+        this.x += this.vx;
+        this.y += this.vy;
+        if (this.type === 'balloon') this.vy -= 0.02;
+        else this.vy += 0.05;
+        this.life++;
+      }
+    }
+
+    let particles = [];
+    function explode() {
+      const x = W/2, y = H/2;
+      for (let i=0; i<100; i++) {
+        particles.push(new Particle(x, y, i%2? 'heart':'balloon'));
+      }
+    }
+    function animate() {
+      ctx.clearRect(0,0,W,H);
+      particles.forEach((p,i) => {
+        p.update(); p.draw();
+        if (p.life > p.ttl) particles.splice(i,1);
+      });
+      requestAnimationFrame(animate);
+    }
+    animate();
+
+    const btn = document.getElementById('surpriseBtn');
+    const msg = document.getElementById('message');
+    btn.addEventListener('click', () => {
+      explode();
+      showMessage('HAPPY BIRTHDAY!');
+    });
+    function showMessage(text) {
+      msg.innerHTML = '';
+      [...text].forEach((ch,i) => {
+        const span = document.createElement('span'); span.textContent = ch;
+        span.className = 'letter'; span.style.animationDelay = `${i*0.1}s`;
+        msg.appendChild(span);
+      });
+    }
+  </script></body>
+</html>
