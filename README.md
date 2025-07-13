@@ -1,129 +1,112 @@
-<html lang="en">
+<!DOCTYPE html><html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Class 10 Study Hub</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="styles.css">
-    <script src="script.js" defer></script>
-    <style>
-        :root {
-            --primary-color: #007bff;
-            --secondary-color: #f8f9fa;
-            --text-color: #333;
-            --background-color: #fff;
-        }
-        body { 
-            font-family: 'Arial', sans-serif; 
-            margin: 0; padding: 0; 
-            background: var(--background-color);
-            color: var(--text-color);
-            transition: 0.3s;
-        }
-        header {
-            display: flex; justify-content: space-between; align-items: center; 
-            padding: 15px; background: var(--primary-color); color: white;
-        }
-        nav {
-            background: var(--secondary-color); padding: 10px;
-        }
-        nav ul {
-            display: flex; list-style: none; padding: 0; justify-content: center;
-        }
-        nav ul li {
-            margin: 0 15px;
-        }
-        nav ul li a {
-            text-decoration: none; color: var(--text-color); font-weight: bold;
-        }
-        main {
-            padding: 20px;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-        }
-        section {
-            padding: 20px; background: var(--secondary-color); border-radius: 8px;
-            text-align: center; box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
-            transition: 0.3s;
-        }
-        section:hover {
-            transform: scale(1.02);
-        }
-        button {
-            background: var(--primary-color); color: white; padding: 10px 15px;
-            border: none; cursor: pointer; border-radius: 5px;
-        }
-        footer {
-            text-align: center; padding: 15px; background: var(--primary-color); color: white;
-        }
-        .dark-mode {
-            --background-color: #222;
-            --text-color: #fff;
-            --secondary-color: #333;
-        }
-        .dark-mode nav ul li a {
-            color: white;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Birthday Surprise</title>
+  <style>
+    html, body { margin: 0; padding: 0; overflow: hidden; height: 100%; background: #f0f8ff; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+    #surpriseBtn {
+      position: absolute; top: 20px; left: 50%; transform: translateX(-50%);
+      padding: 1rem 2rem; font-size: 1.2rem; background: linear-gradient(45deg, #ff4081, #ff80ab);
+      border: none; border-radius: 2rem; color: white; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+      transition: transform 0.2s;
+    }
+    #surpriseBtn:active { transform: translateX(-50%) scale(0.95); }
+    #message {
+      position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+      font-size: 4rem; color: #ff4081; display: flex;
+    }
+    #message .letter {
+      display: inline-block; opacity: 0;
+      animation: dance 1s ease-in-out forwards;
+    }
+    @keyframes dance {
+      0% { transform: translateY(30px) rotate(0deg); opacity: 0; }
+      50% { transform: translateY(-10px) rotate(10deg); opacity: 1; }
+      100% { transform: translateY(0) rotate(-10deg); opacity: 1; }
+    }
+    canvas { position: absolute; top: 0; left: 0; }
+  </style>
 </head>
 <body>
-    <header>
-        <h1>Class 10 Study Hub</h1>
-        <input type="text" id="search-bar" placeholder="Search topics...">
-        <button id="dark-mode-toggle"><i class="fas fa-moon"></i></button>
-    </header>
-    <nav>
-        <ul>
-            <li><a href="#notes">Study Materials</a></li>
-            <li><a href="#quizzes">Quizzes</a></li>
-            <li><a href="#videos">Video Lessons</a></li>
-            <li><a href="#chatbot">AI Chatbot</a></li>
-            <li><a href="#forum">Discussion Forum</a></li>
-        </ul>
-    </nav>
-    <main>
-        <section id="notes">
-            <h2>📚 Study Materials</h2>
-            <p>Download PDFs, notes, and explanations for all subjects.</p>
-            <button>Download Notes</button>
-        </section>
-        <section id="quizzes">
-            <h2>📝 Interactive Quizzes</h2>
-            <p>Test your knowledge with MCQs and practice tests.</p>
-            <button>Start Quiz</button>
-        </section>
-        <section id="videos">
-            <h2>🎥 Video Lessons</h2>
-            <p>Learn with text-based videos and infographics.</p>
-            <button>View Lessons</button>
-        </section>
-        <section id="chatbot">
-            <h2>🤖 AI Chatbot</h2>
-            <p>Ask questions and get instant answers.</p>
-            <button>Chat Now</button>
-        </section>
-        <section id="forum">
-            <h2>💬 Discussion Forum</h2>
-            <p>Engage with peers and ask questions.</p>
-            <button>Join Discussion</button>
-        </section>
-    </main>
-    <footer>
-        <p>&copy; 2025 Class 10 Study Hub. All rights reserved.</p>
-    </footer>
-    <script>
-        document.getElementById("dark-mode-toggle").addEventListener("click", function() {
-            document.body.classList.toggle("dark-mode");
-            this.innerHTML = document.body.classList.contains("dark-mode") ? '<i class="fas fa-sun"></i>' : '<i class="fas fa-moon"></i>';
-        });document.getElementById("search-bar").addEventListener("input", function() {
-        let query = this.value.toLowerCase();
-        let sections = document.querySelectorAll("main section");
-        sections.forEach(section => {
-            section.style.display = section.innerText.toLowerCase().includes(query) ? "block" : "none";
-        });
+  <button id="surpriseBtn">Surprise!</button>
+  <div id="message"></div>
+  <canvas id="canvas"></canvas>  <script>
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+    let W = canvas.width = window.innerWidth;
+    let H = canvas.height = window.innerHeight;
+    window.addEventListener('resize', () => { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; });
+    class Particle {
+      constructor(x, y, type) {
+        this.x = x; this.y = y;
+        this.vx = (Math.random() - 0.5) * 2;
+        this.vy = Math.random() * -3 - 2;
+        this.size = 20 + Math.random() * 15;
+        this.type = type; // 'heart' or 'balloon'
+        this.life = 0;
+        this.ttl = 200 + Math.random() * 100;
+        this.hue = Math.random() * 360;
+      }
+      draw() {
+        ctx.save();
+        ctx.translate(this.x, this.y);
+        if (this.type === 'heart') {
+          ctx.fillStyle = `hsl(${this.hue}, 80%, 60%)`;
+          ctx.beginPath();
+          const topCurveHeight = this.size * 0.3;
+          ctx.moveTo(0, topCurveHeight);
+          ctx.bezierCurveTo(0, topCurveHeight - this.size / 2, -this.size / 2, topCurveHeight - this.size / 2, -this.size / 2, topCurveHeight);
+          ctx.bezierCurveTo(-this.size / 2, topCurveHeight + this.size / 2, 0, topCurveHeight + this.size * 0.75, 0, this.size);
+          ctx.bezierCurveTo(0, topCurveHeight + this.size * 0.75, this.size / 2, topCurveHeight + this.size / 2, this.size / 2, topCurveHeight);
+          ctx.bezierCurveTo(this.size / 2, topCurveHeight - this.size / 2, 0, topCurveHeight - this.size / 2, 0, topCurveHeight);
+          ctx.closePath();
+          ctx.fill();
+        } else {
+          // balloon
+          ctx.fillStyle = `hsl(${this.hue}, 80%, 70%)`;
+          ctx.beginPath(); ctx.ellipse(0, 0, this.size*0.6, this.size, 0, 0, Math.PI*2); ctx.fill();
+          ctx.strokeStyle = '#555'; ctx.beginPath(); ctx.moveTo(0, this.size); ctx.lineTo(0, this.size + 30); ctx.stroke();
+        }
+        ctx.restore();
+      }
+      update() {
+        this.x += this.vx;
+        this.y += this.vy;
+        if (this.type === 'balloon') this.vy -= 0.02;
+        else this.vy += 0.05;
+        this.life++;
+      }
+    }
+    let particles = [];
+    function explode() {
+      const x = W/2, y = H/2;
+      for (let i=0; i<100; i++) {
+        particles.push(new Particle(x, y, i%2? 'heart':'balloon'));
+      }
+    }
+    function animate() {
+      ctx.clearRect(0,0,W,H);
+      particles.forEach((p,i) => {
+        p.update(); p.draw();
+        if (p.life > p.ttl) particles.splice(i,1);
+      });
+      requestAnimationFrame(animate);
+    }
+    animate();
+    const btn = document.getElementById('surpriseBtn');
+    const msg = document.getElementById('message');
+    btn.addEventListener('click', () => {
+      explode();
+      showMessage('HAPPY BIRTHDAY!');
     });
-</script>
-
-</body>
+    function showMessage(text) {
+      msg.innerHTML = '';
+      [...text].forEach((ch,i) => {
+        const span = document.createElement('span'); span.textContent = ch;
+        span.className = 'letter'; span.style.animationDelay = `${i*0.1}s`;
+        msg.appendChild(span);
+      });
+    }
+  </script></body>
 </html>
