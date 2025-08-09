@@ -1,492 +1,343 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" >
 <head>
   <meta charset="UTF-8" />
-  <title>Study Master Chat</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-</head>
-<body>
-  <h2>📩 Study Master Chat</h2>
-
-  <!-- 🔗 Top Right Link Button -->
-  <a id="topLinkButton" href="https://www.selfstudys.com/mcq/jee/physics/online-test/29-motion-in-a-plane" target="_blank">🔗 Open Link</a>
-
-  <!-- 🧹 Clear Chat Button -->
-  <button onclick="clearAllMessages()" style="
-    position: absolute;
-    top: 60px;
-    right: 20px;
-    background-color: red;
-    color: white;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 8px;
-    font-size: 14px;
-    cursor: pointer;">🧹 Clear Chat</button>
-
-  <!-- 💬 Chat Area -->
-  <div id="chatBox" class="chatBox"></div>
-
-  <!-- ↪️ Reply Box -->
-  <div id="replyBox" style="display:none;">
-    <small><b id="replyUser"></b>: <span id="replyText"></span></small>
-    <button onclick="cancelReply()" style="float:right;font-size:12px;">❌</button>
-  </div>
-<!-- 📝 Input Area -->
-<div id="inputArea">
-  <input type="text" id="messageInput" placeholder="Message..." 
-         onkeydown="if(event.key==='Enter') sendMessage()" />
-  <button onclick="sendMessage()">➤</button>
-  <!-- Image Upload Button -->
-  <button onclick="document.getElementById('imageUpload').click()">🖼️</button>
-  <input type="file" id="imageUpload" accept="image/*" style="display:none;" onchange="sendImage(this)" />
-</div>
-
-  <!-- 🌗 Theme Toggle -->
-  <div id="darkModeToggle" onclick="toggleTheme()">🌗 Theme</div>
-
-  <!-- 💄 Styling -->
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Advanced Life Doubt Chatbot</title>
   <style>
+    /* Reset & base */
+    * {
+      box-sizing: border-box;
+    }
     body {
-      font-family: 'Inter', sans-serif;
-      background-color: #121212;
+      margin: 0; padding: 0; background: #1a1a1a;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex; justify-content: center; align-items: center;
+      height: 100vh;
       color: #eee;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    #chat-container {
+      background: #252b36;
+      width: 100%; max-width: 450px;
+      height: 600px;
+      border-radius: 12px;
+      box-shadow: 0 10px 40px rgba(0,0,0,0.5);
       display: flex;
       flex-direction: column;
-      align-items: center;
+      overflow: hidden;
+    }
+    #chat-header {
+      background: #2f3640;
       padding: 20px;
-      transition: all 0.3s ease;
+      text-align: center;
+      font-size: 1.4rem;
+      font-weight: 700;
+      letter-spacing: 1px;
+      border-bottom: 1px solid #3a3f4b;
+      user-select: none;
     }
-
-    h2 {
-      font-weight: 600;
-      font-size: 24px;
-      margin-bottom: 10px;
-    }
-
-    .chatBox {
-      width: 100%;
-      max-width: 450px;
-      height: 60vh;
-      background: #1e1e2a;
-      border-radius: 15px;
-      padding: 10px 15px;
+    #chat-window {
+      flex: 1;
+      padding: 20px;
       overflow-y: auto;
       display: flex;
       flex-direction: column;
       gap: 12px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-      margin-bottom: 15px;
+      scroll-behavior: smooth;
+      background: #1c2028;
     }
-
+    /* Messages */
     .message {
-      display: inline-block;
-      position: relative;
-      padding: 10px 14px;
       max-width: 75%;
-      word-wrap: break-word;
-      border-radius: 18px;
-      font-size: 14px;
-      line-height: 1.5;
-      animation: slideIn 0.3s ease forwards;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.3);
-    }
-
-    .me {
-      background: #4f46e5;
-      color: white;
-      align-self: flex-end;
-      margin-left: auto;
-      border-bottom-right-radius: 4px;
-    }
-
-    .other {
-      background: #333;
-      color: white;
-      align-self: flex-start;
-      margin-right: auto;
-      border-bottom-left-radius: 4px;
-    }
-
-    .me::after {
-      content: "";
-      position: absolute;
-      bottom: 0;
-      right: -8px;
-      width: 0;
-      height: 0;
-      border-left: 8px solid #4f46e5;
-      border-top: 8px solid transparent;
-      border-bottom: 8px solid transparent;
-    }
-
-    .other::after {
-      content: "";
-      position: absolute;
-      bottom: 0;
-      left: -8px;
-      width: 0;
-      height: 0;
-      border-right: 8px solid #333;
-      border-top: 8px solid transparent;
-      border-bottom: 8px solid transparent;
-    }
-
-    .username {
-      font-size: 12px;
-      opacity: 0.7;
-      margin-bottom: 2px;
-      display: block;
-    }
-
-    .time {
-      font-size: 11px;
-      opacity: 0.6;
-      margin-top: 6px;
-      text-align: right;
-    }
-
-    .message:hover {
-      opacity: 0.95;
-      background-color: #4f46e5cc;
-    }
-#replyBox {
-  max-width: 450px;
-  width: 100%;
-  margin-bottom: 8px;
-  background: #2c2c2c;
-  border-left: 4px solid #22c55e; /* green bar */
-  padding: 8px 12px;
-  font-size: 13px;
-  border-radius: 8px;
-  position: relative;
-  color: #a5f3fc;
-  font-style: italic;
-  box-shadow: 0 0 6px rgba(0,0,0,0.4);
-}
-    .quoted {
-  background: rgba(255, 255, 255, 0.1);
-  padding: 6px 10px;
-  border-left: 4px solid #22c55e;
-  margin-bottom: 6px;
-  border-radius: 6px;
-  font-size: 13px;
-  font-style: italic;
-  color: #d1fae5;
-  white-space: pre-line;
-    }
-    #inputArea {
-      display: flex;
-      max-width: 450px;
-      width: 100%;
-      gap: 10px;
-    }
-
-    #messageInput {
-      flex: 1;
-      border: none;
+      padding: 14px 18px;
       border-radius: 20px;
-      padding: 10px 15px;
-      background: #1e1e2a;
+      font-size: 1rem;
+      line-height: 1.4;
+      position: relative;
+      word-wrap: break-word;
+      user-select: text;
+    }
+    .bot-message {
+      background: #3b82f6;
+      color: #fff;
+      align-self: flex-start;
+      border-bottom-left-radius: 2px;
+      animation: fadeInUp 0.3s ease forwards;
+    }
+    .user-message {
+      background: #10b981;
+      color: #f0fdf4;
+      align-self: flex-end;
+      border-bottom-right-radius: 2px;
+      animation: fadeInUp 0.3s ease forwards;
+    }
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    /* Fixed questions area */
+    #fixed-questions {
+      padding: 12px 20px;
+      background: #2f3640;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      border-top: 1px solid #3a3f4b;
+      user-select: none;
+    }
+    .question-chip {
+      background: #394152;
+      padding: 10px 16px;
+      border-radius: 30px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      color: #a0aec0;
+      transition: background-color 0.25s ease, color 0.25s ease;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    }
+    .question-chip:hover,
+    .question-chip:focus {
+      background: #3b82f6;
       color: white;
-      font-size: 14px;
+      outline: none;
+      box-shadow: 0 4px 12px rgba(59,130,246,0.7);
+    }
+    /* Input area */
+    #input-area {
+      display: flex;
+      padding: 15px 20px;
+      background: #2f3640;
+      border-top: 1px solid #3a3f4b;
+    }
+    #user-input {
+      flex: 1;
+      padding: 14px 18px;
+      border-radius: 30px;
+      border: none;
+      font-size: 1rem;
+      outline: none;
+      background: #394152;
+      color: #eee;
+      transition: background-color 0.25s ease;
+      font-weight: 600;
+    }
+    #user-input::placeholder {
+      color: #a0aec0;
+      font-weight: 400;
+    }
+    #user-input:focus {
+      background: #46505f;
+    }
+    #send-btn {
+      margin-left: 12px;
+      background: #3b82f6;
+      border: none;
+      padding: 0 24px;
+      border-radius: 30px;
+      color: white;
+      font-weight: 700;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.25s ease;
+      user-select: none;
+    }
+    #send-btn:hover,
+    #send-btn:focus {
+      background: #2563eb;
       outline: none;
     }
-
-    button {
-      background: #4f46e5;
-      color: white;
-      border: none;
-      padding: 0 18px;
-      border-radius: 20px;
-      cursor: pointer;
-      font-size: 18px;
-      transition: 0.3s;
+    /* Typing indicator */
+    #typing-indicator {
+      align-self: flex-start;
+      display: flex;
+      gap: 6px;
+      margin-bottom: 10px;
+      margin-left: 5px;
     }
-
-    button:hover {
-      background: #6366f1;
+    .dot {
+      width: 10px;
+      height: 10px;
+      background: #3b82f6;
+      border-radius: 50%;
+      animation: blink 1.4s infinite both;
     }
-
-    #darkModeToggle {
-      margin-top: 10px;
-      font-size: 13px;
-      cursor: pointer;
-      opacity: 0.7;
+    .dot:nth-child(2) {
+      animation-delay: 0.2s;
     }
-
-    .light {
-      background-color: #f7f7f7;
-      color: #111;
+    .dot:nth-child(3) {
+      animation-delay: 0.4s;
     }
-
-    .light .chatBox {
-      background: #fff;
+    @keyframes blink {
+      0%, 80%, 100% {
+        opacity: 0.3;
+      }
+      40% {
+        opacity: 1;
+      }
     }
-
-    .light #messageInput {
-      background: #fff;
-      color: #000;
+    /* Scrollbar styling */
+    #chat-window::-webkit-scrollbar {
+      width: 6px;
     }
-
-    .light .me {
-      background-color: #4f46e5;
-      color: white;
+    #chat-window::-webkit-scrollbar-track {
+      background: #1c2028;
     }
-
-    .light .other {
-      background-color: #ddd;
-      color: #000;
+    #chat-window::-webkit-scrollbar-thumb {
+      background: #3b82f6;
+      border-radius: 3px;
     }
-
-    .light .time {
-      color: #555;
+    /* Responsive */
+    @media (max-width: 480px) {
+      #chat-container {
+        height: 100vh;
+        max-width: 100vw;
+        border-radius: 0;
+      }
+      #chat-header {
+        font-size: 1.2rem;
+        padding: 15px;
+      }
+      #fixed-questions {
+        padding: 10px 12px;
+      }
+      .question-chip {
+        font-size: 0.85rem;
+        padding: 8px 12px;
+      }
+      #input-area {
+        padding: 10px 12px;
+      }
+      #user-input {
+        font-size: 0.9rem;
+        padding: 12px 14px;
+      }
+      #send-btn {
+        font-size: 0.9rem;
+        padding: 0 18px;
+      }
     }
-
-    #topLinkButton {
-      position: absolute;
-      top: 20px;
-      right: 20px;
-      background-color: #ef4444;
-      color: white;
-      padding: 8px 14px;
-      border-radius: 8px;
-      text-decoration: none;
-      font-size: 13px;
-      font-weight: 500;
-      box-shadow: 0 2px 6px rgba(0,0,0,0.3);
-      transition: background 0.3s, transform 0.2s;
-    }
-
-    #topLinkButton:hover {
-      background-color: #dc2626;
-      transform: scale(1.05);
-    }
-    .chatImage {
-  max-width: 220px;
-  max-height: 220px;
-  border-radius: 10px;
-  display: block;
-  margin-top: 5px;
-  cursor: pointer;
-  transition: transform 0.2s;
-}
-.chatImage:hover {
-  transform: scale(1.1);
-}
   </style>
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-  import { getDatabase, ref, push, onChildAdded, remove } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+</head>
+<body>
 
-  const firebaseConfig = {
-    apiKey: "AIzaSyBWbXmXb0DsEZpuyWYv9yJUmCZTxMKKicJS",
-    authDomain: "studychat-e461e.firebaseapp.com",
-    databaseURL: "https://studychat-e461e-default-rtdb.firebaseio.com",
-    projectId: "studychat-e461e",
-    storageBucket: "studychat-e461e.appspot.com",
-    messagingSenderId: "983041821777",
-    appId: "1:983041821777:web:6933ef40f1c14e188f5060"
+<div id="chat-container" role="main" aria-label="Life Doubt Chatbot">
+  <header id="chat-header">Life Doubt Chatbot</header>
+  <section id="chat-window" aria-live="polite" aria-relevant="additions"></section>
+  <nav id="fixed-questions" aria-label="Common questions"></nav>
+  <form id="input-area" onsubmit="return false;">
+    <input type="text" id="user-input" aria-label="Type your doubt" autocomplete="off" placeholder="Type your doubt here..." />
+    <button id="send-btn" aria-label="Send message">Send</button>
+  </form>
+</div>
+
+<script>
+  // Fixed Q&A you can customize
+  const qa = {
+    "How to be happy?": "Happiness comes from within. Focus on gratitude and self-care.",
+    "How to handle stress?": "Try meditation, exercise, and time management to reduce stress.",
+    "What is the meaning of life?": "Life's meaning is personal; find purpose in what you love.",
+    "How to improve relationships?": "Communicate openly and show empathy to build strong relationships."
   };
 
-  const app = initializeApp(firebaseConfig);
-  const db = getDatabase(app);
-  const chatRef = ref(db, "chatroom");
+  const chatWindow = document.getElementById('chat-window');
+  const fixedQuestions = document.getElementById('fixed-questions');
+  const userInput = document.getElementById('user-input');
+  const sendBtn = document.getElementById('send-btn');
 
-  const allowedUsers = ["djkumar", "My life"];
-  const params = new URLSearchParams(window.location.search);
-  let username = params.get("user") || prompt("Enter your username:");
-
-  if (!allowedUsers.includes(username)) {
-    alert("❌ Access Denied. Only authorized users can access this chat.");
-    document.body.innerHTML = "<h2 style='text-align:center;color:red;'>❌ Access Denied</h2>";
-    throw new Error("Unauthorized user");
+  // Utility: Smooth scroll chat to bottom
+  function scrollChatToBottom() {
+    chatWindow.scrollTo({ top: chatWindow.scrollHeight, behavior: 'smooth' });
   }
 
-  onChildAdded(chatRef, (data) => {
-    const msg = data.val();
-    const key = data.key;
+  // Typing animation for bot messages
+  async function botTypingEffect(text) {
+    const typingIndicator = document.createElement('div');
+    typingIndicator.id = 'typing-indicator';
+    typingIndicator.innerHTML = `
+      <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+    `;
+    chatWindow.appendChild(typingIndicator);
+    scrollChatToBottom();
 
-    if (allowedUsers.includes(msg.user)) {
-      const msgElem = document.createElement("div");
-      msgElem.className = "message " + (msg.user === username ? "me" : "other");
+    // Wait about 1.2 seconds for typing simulation
+    await new Promise(res => setTimeout(res, 1200));
 
-      msgElem.innerHTML = `
-        <span class="username">${msg.user}</span>
-        ${msg.text}
-        <div class="time">${msg.time || ''}</div>
-      `;
+    // Remove typing indicator
+    typingIndicator.remove();
 
-      // Double-click to reply
-      msgElem.ondblclick = () => {
-        document.getElementById("replyBox").style.display = "block";
-        document.getElementById("replyUser").textContent = msg.user;
-        document.getElementById("replyText").textContent = msg.text;
-      };
+    // Show message with fade-in animation
+    addMessage(text, 'bot');
+  }
 
-      // Click to delete your own message
-      if (msg.user === username) {
-        msgElem.style.cursor = "pointer";
-        msgElem.title = "Click to delete";
-        msgElem.onclick = () => {
-          if (confirm("🗑️ Delete this message?")) {
-            const delRef = ref(db, "chatroom/" + key);
-            remove(delRef)
-              .then(() => msgElem.remove())
-              .catch(err => alert("❌ Error: " + err.message));
-          }
-        };
-      }
+  // Add message to chat window
+  function addMessage(text, sender) {
+    const msgDiv = document.createElement('div');
+    msgDiv.classList.add('message');
+    msgDiv.classList.add(sender === 'bot' ? 'bot-message' : 'user-message');
+    msgDiv.textContent = text;
+    chatWindow.appendChild(msgDiv);
+    scrollChatToBottom();
+  }
 
-      document.getElementById("chatBox").appendChild(msgElem);
-      document.getElementById("chatBox").scrollTop = chatBox.scrollHeight;
+  // Display fixed questions as chips/buttons
+  function displayFixedQuestions() {
+    fixedQuestions.innerHTML = '';
+    Object.keys(qa).forEach(question => {
+      const chip = document.createElement('button');
+      chip.type = 'button';
+      chip.className = 'question-chip';
+      chip.textContent = question;
+      chip.addEventListener('click', () => handleUserQuestion(question));
+      fixedQuestions.appendChild(chip);
+    });
+  }
+
+  // Handle user question (from chip or input)
+  async function handleUserQuestion(question) {
+    if (!question.trim()) return;
+
+    addMessage(question, 'user');
+
+    // Check fixed answers, else fallback message
+    if (qa.hasOwnProperty(question)) {
+      await botTypingEffect(qa[question]);
+    } else {
+      await botTypingEffect("We will answer you as soon as possible.");
+    }
+  }
+
+  // Handle sending message
+  sendBtn.addEventListener('click', () => {
+    const question = userInput.value.trim();
+    if (!question) return;
+    userInput.value = '';
+    handleUserQuestion(question);
+  });
+
+  // Send on Enter key pressed
+  userInput.addEventListener('keydown', e => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      sendBtn.click();
     }
   });
 
-  window.sendMessage = function () {
-    const input = document.getElementById("messageInput");
-    const text = input.value.trim();
-    if (!text) return;
-
-    const replyTo = document.getElementById("replyText").textContent;
-    const replyUser = document.getElementById("replyUser").textContent;
-    const isReplying = document.getElementById("replyBox").style.display === "block";
-
-    let fullMessage = text;
-    if (isReplying) {
-      fullMessage = `<div class="quoted">↪️ ${replyUser}: ${replyTo}</div>${text}`;
-    }
-
-    push(chatRef, {
-      user: username,
-      text: fullMessage,
-      time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-    });
-
-    input.value = "";
-    cancelReply();
-  };
-  window.sendImage = function (input) {
-  const file = input.files[0];
-  if (!file) return;
-
-  const reader = new FileReader();
-  reader.onload = function (e) {
-    push(chatRef, {
-      user: username,
-      text: `<img src="${e.target.result}" class="chatImage" />`,
-      time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
-    });
-    input.value = ""; // Reset so it won't resend the same image
-  };
-  reader.readAsDataURL(file);
-};
-  window.cancelReply = function () {
-    document.getElementById("replyBox").style.display = "none";
-    document.getElementById("replyUser").textContent = "";
-    document.getElementById("replyText").textContent = "";
-  };
-
-  function toggleTheme() {
-    document.body.classList.toggle("light");
+  // Initialize chatbot with greeting and fixed questions
+  async function initChatbot() {
+    await botTypingEffect("HAVE A DOUBT REGARDING LIFE?");
+    displayFixedQuestions();
   }
 
-  window.clearAllMessages = function () {
-    if (confirm("⚠️ Delete all chat messages?")) {
-      remove(chatRef)
-        .then(() => alert("✅ All messages deleted!"))
-        .catch(err => alert("❌ Error: " + err.message));
-    }
-  };
-  // Show popup icon and attach click event only for authorized user
-window.addEventListener("load", () => {
-  if (allowedUsers.includes(username)) {
-    const popupIcon = document.getElementById("popupIcon");
-    const popupMessage = document.getElementById("popupMessage");
-
-    popupIcon.style.display = "flex"; // show icon
-
-    popupIcon.onclick = () => {
-      if (popupMessage.style.display === "none" || popupMessage.style.display === "") {
-        popupMessage.style.display = "block";
-      } else {
-        popupMessage.style.display = "none";
-      }
-    };
-  } else {
-    // Hide icon if not authorized just in case
-    const popupIcon = document.getElementById("popupIcon");
-    if (popupIcon) popupIcon.style.display = "none";
-  }
-});
-
-window.closePopup = function() {
-  document.getElementById("popupMessage").style.display = "none";
-};
+  initChatbot();
 </script>
-  <!-- Floating Popup Icon -->
-<div id="popupIcon" title="Click for message" 
-     style="
-       position: fixed; 
-       bottom: 20px; 
-       right: 20px; 
-       background-color: #4f46e5; 
-       color: white; 
-       width: 52px; 
-       height: 52px; 
-       border-radius: 50%; 
-       display: flex; 
-       justify-content: center; 
-       align-items: center; 
-       cursor: pointer; 
-       box-shadow: 0 4px 12px rgb(79 70 229 / 0.6); 
-       font-size: 28px; 
-       user-select: none; 
-       z-index: 1000;
-       font-family: 'Inter', sans-serif;
-     ">
-  💬
-</div>
 
-<!-- Popup Message Box -->
-<div id="popupMessage" style="
-  position: fixed; 
-  bottom: 80px; 
-  right: 20px; 
-  background: linear-gradient(135deg, #4f46e5, #4338ca);
-  color: #f0f0f0; 
-  padding: 20px 25px; 
-  border-radius: 16px; 
-  max-width: 320px; 
-  font-family: 'Inter', sans-serif;
-  font-size: 15px; 
-  line-height: 1.5;
-  font-weight: 500;
-  box-shadow: 0 8px 20px rgb(79 70 229 / 0.6);
-  display: none; 
-  z-index: 1000;
-  user-select: text;
-  ">
-  <!-- Your custom message -->
-  <p style="margin: 0 0 12px 0; font-style: normal; color:#d1d5db;">
-    Welcome to <strong>Study Master Chat</strong>! 🚀<br>
-    Feel free to ask questions or share study materials here.
-  </p>
-  <button onclick="closePopup()" style="
-    background: #e0e7ff;
-    color: #4f46e5;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 12px;
-    font-weight: 600;
-    cursor: pointer;
-    font-family: 'Inter', sans-serif;
-    font-size: 14px;
-    box-shadow: 0 2px 8px rgb(79 70 229 / 0.4);
-    transition: background-color 0.3s ease;
-  " onmouseover="this.style.background='#c7d2fe'" onmouseout="this.style.background='#e0e7ff'">
-    Close
-  </button>
-    </div>
 </body>
-    </html>
+</html>
