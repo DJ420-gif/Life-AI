@@ -209,7 +209,7 @@
     </style>
 </head>
 <body>
-            <li><a href="studychat/index2.html" class="chat-button">💬 Start Chat</a></li>
+            <li><a href="Ai.html" class="chat-button">💬 Start Chat</a></li>
     <div class="chat-container" id="chat">
         <!-- Chat header with title and theme toggle -->
         <div class="chat-header">
