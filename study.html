@@ -257,7 +257,7 @@
         <div class="logo">Quizzeria</div>
         <nav>
             <ul>
-                <li><a href="#">Home</a></li>
+                <li><a href="Ai.html">Home</a></li>
                 <li><a href="#categories">Quizzes</a></li>
                 <li><a href="#testimonials">Testimonials</a></li>
                 <li><a href="#contact">Contact</a></li>
