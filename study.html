@@ -20,9 +20,10 @@
 
     #chat-container {
       background: #252b36;
-      width: 100%; max-width: 450px;
-      height: 600px;
-      border-radius: 12px;
+  width: 100vw;
+  height: 100vh;
+  max-width: none;
+  border-radius: 0;
       box-shadow: 0 10px 40px rgba(0,0,0,0.5);
       display: flex;
       flex-direction: column;
@@ -55,7 +56,7 @@
 
     .message {
       max-width: 75%;
-      padding: 14px 18px;
+      padding: 18px 22px;
       border-radius: 20px;
       font-size: 1rem;
       line-height: 1.4;
@@ -133,10 +134,10 @@
 
     #user-input {
       flex: 1;
-      padding: 14px 18px;
+      padding: 16px 20px;
       border-radius: 30px;
       border: none;
-      font-size: 1rem;
+      font-size: 1.1rem;
       outline: none;
       background: #394152;
       color: #eee;
@@ -157,11 +158,11 @@
       margin-left: 12px;
       background: #3b82f6;
       border: none;
-      padding: 0 24px;
+      padding: 16px 20px;
       border-radius: 30px;
       color: white;
       font-weight: 700;
-      font-size: 1rem;
+      font-size: 1.1rem;
       cursor: pointer;
       transition: background-color 0.25s ease;
       user-select: none;
