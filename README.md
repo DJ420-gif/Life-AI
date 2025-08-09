@@ -1,351 +1,345 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
+    <!-- Basic Meta Tags for SEO and responsiveness -->
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Advanced AI Chatbot</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Quizzeria – JEE, NEET, Class 10 & 11 Quiz Platform</title>
+    <meta name="description" content="Quizzeria: Practice quizzes for JEE, NEET, Class 10 & 11 students. Free online quiz platform for exam preparation.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:400,700|Open+Sans:400,600&display=swap" rel="stylesheet">
     <style>
-        /* Basic reset */
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        /* Reset & Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        html {
+            font-family: 'Open Sans', sans-serif;
+            font-size: 16px; /* Base font size (comfortable reading size) */
+            scroll-behavior: smooth;
+        }
         body {
-            font-family: Arial, sans-serif;
-            background-color: #f5f5f5;
+            line-height: 1.6;
             color: #333;
+            background-color: #f9f9f9;
+        }
+        a {
+            color: inherit;
+            text-decoration: none;
+        }
+        /* Header / Navigation */
+        header {
+            background: #fff;
+            padding: 16px 32px;
             display: flex;
+            justify-content: space-between;
             align-items: center;
-            justify-content: center;
-            height: 100vh;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }
-        /* Chat container style */
-        .chat-container {
-            background-color: white;
-            width: 380px;
-            max-width: 100%;
-            height: 600px;
+        header .logo {
+            font-family: 'Roboto', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #2c3e50;
+        }
+        nav ul {
+            list-style: none;
             display: flex;
-            flex-direction: column;
-            border-radius: 10px;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            overflow: hidden;
-            position: relative;
+            gap: 24px;
         }
-        /* Dark mode theme (adds dark colors) */
-        .dark-mode {
-            background-color: #1e1e2a;
-            color: #c9d1d9;
+        nav a {
+            font-size: 1rem;
+            color: #2c3e50;
         }
-        .dark-mode .chat-header {
-            background-color: #2c2f33;
+        nav a:hover {
+            color: #3498db;
+        }
+        /* Hero Section */
+        #hero {
+            background: linear-gradient(135deg, #3498db, #2ecc71);
             color: #fff;
-        }
-        .dark-mode .chat-window {
-            background-color: #25262d;
-        }
-        .dark-mode .chat-bubble.bot {
-            background-color: #3a3f47;
-            color: #ddd;
-        }
-        .dark-mode .chat-bubble.user {
-            background-color: #3c6cf2;
-            color: #fff;
-        }
-        /* Chat header */
-        .chat-header {
-            background-color: #007bff;
-            color: white;
-            padding: 10px;
             text-align: center;
-            position: relative;
+            padding: 80px 20px;
         }
-        .chat-header .title {
-            font-size: 1.1em;
-            font-weight: bold;
+        #hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 16px;
         }
-        .chat-header .close-btn {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: none;
-            border: none;
-            font-size: 18px;
-            color: white;
-            cursor: pointer;
+        #hero p {
+            font-size: 1.125rem;
+            margin-bottom: 24px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
         }
-        /* Dark mode toggle switch */
-        .mode-toggle {
-            position: absolute;
-            top: 10px;
-            right: 40px;
-        }
-        .mode-toggle label {
-            cursor: pointer;
-        }
-        .mode-toggle input { display: none; }
-        .mode-toggle .slider {
-            position: relative;
-            width: 40px;
-            height: 20px;
-            background: #ccc;
-            display: inline-block;
-            border-radius: 10px;
-            vertical-align: middle;
-            transition: background 0.3s;
-        }
-        .mode-toggle .slider:before {
-            content: "";
-            position: absolute;
-            width: 16px;
-            height: 16px;
-            left: 2px;
-            top: 2px;
-            background: white;
-            border-radius: 50%;
-            transition: transform 0.3s;
-        }
-        .mode-toggle input:checked + .slider {
-            background: #4caf50;
-        }
-        .mode-toggle input:checked + .slider:before {
-            transform: translateX(20px);
-        }
-        /* Chat window (message area) */
-        .chat-window {
-            flex: 1;
-            padding: 10px;
-            overflow-y: auto;
-            background-color: #fafafa;
-        }
-        /* Chat bubbles */
-        .chat-bubble {
-            margin: 10px;
-            padding: 8px 12px;
-            max-width: 80%;
-            border-radius: 15px;
-            position: relative;
-            line-height: 1.4;
-            word-wrap: break-word;
-            animation: fadeIn 0.3s ease;
-        }
-        .chat-bubble.user {
-            align-self: flex-end;
-            background-color: #cdeffd;
-            color: #000;
-            border-bottom-right-radius: 0;
-        }
-        .chat-bubble.bot {
-            align-self: flex-start;
-            background-color: #e4e4e4;
-            color: #000;
-            border-bottom-left-radius: 0;
-        }
-        /* Typing indicator (three animated dots) */
-        .typing-indicator {
-            display: inline-block;
-            margin: 10px;
-        }
-        .typing-indicator span {
-            display: inline-block;
-            width: 6px;
-            height: 6px;
-            margin: 0 2px;
-            background: #999;
-            border-radius: 50%;
-            animation: blink 1.4s infinite both;
-        }
-        .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
-        .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
-        @keyframes blink {
-            0%, 80%, 100% { opacity: 0.3; }
-            40% { opacity: 1; }
-        }
-        /* Input area at bottom */
-        .input-area {
-            display: flex;
-            border-top: 1px solid #ddd;
-        }
-        .input-area input {
-            flex: 1;
-            border: none;
-            padding: 10px;
-            font-size: 1em;
-        }
-        .input-area input:focus { outline: none; }
-        .input-area button {
-            padding: 0 20px;
-            border: none;
-            background: #007bff;
+        #hero .btn {
+            background-color: #e67e22;
             color: #fff;
-            font-size: 1.2em;
+            padding: 12px 24px;
+            font-size: 1.125rem;
+            border: none;
+            border-radius: 4px;
             cursor: pointer;
+            transition: background-color 0.3s;
         }
-        .input-area button:active { opacity: 0.8; }
-        /* FAQ suggestion buttons */
-        .suggestions {
+        #hero .btn:hover {
+            background-color: #cf711e;
+        }
+        /* Categories Section */
+        #categories {
+            padding: 40px 20px;
+            max-width: 1200px;
+            margin: auto;
+        }
+        #categories h2 {
+            font-family: 'Roboto', sans-serif;
+            font-size: 2rem;
+            text-align: center;
+            margin-bottom: 32px;
+            color: #2c3e50;
+        }
+        .cards-container {
             display: flex;
             flex-wrap: wrap;
-            padding: 5px;
-            gap: 5px;
+            gap: 24px;
+            justify-content: center;
         }
-        .suggestion-btn {
-            background: #f1f1f1;
-            border: 1px solid #ccc;
-            border-radius: 15px;
-            padding: 5px 10px;
-            font-size: 0.9em;
+        .card {
+            background: #fff;
+            border-radius: 8px;
+            padding: 24px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            flex: 1 1 calc(45% - 24px);
+            min-width: 260px;
+            max-width: 400px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        .card h3 {
+            font-family: 'Roboto', sans-serif;
+            font-size: 1.5rem;
+            margin-bottom: 12px;
+            color: #2c3e50;
+        }
+        .card p {
+            flex-grow: 1;
+            text-align: center;
+            margin-bottom: 16px;
+        }
+        .card .btn {
+            margin-top: auto;
+            background-color: #3498db;
+            padding: 10px 20px;
+            color: #fff;
+            border-radius: 4px;
+            text-transform: uppercase;
+            font-size: 0.95rem;
+        }
+        .card .btn:hover {
+            background-color: #2a80b9;
+        }
+        /* Testimonials Section (Optional Carousel) */
+        #testimonials {
+            background: #eef2f5;
+            padding: 40px 20px;
+        }
+        #testimonials h2 {
+            font-family: 'Roboto', sans-serif;
+            font-size: 2rem;
+            text-align: center;
+            margin-bottom: 32px;
+            color: #2c3e50;
+        }
+        .testimonial-container {
+            max-width: 800px;
+            margin: auto;
+            position: relative;
+        }
+        .testimonial {
+            display: none;
+            background: #fff;
+            padding: 24px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+        }
+        .testimonial.active {
+            display: block;
+        }
+        .testimonial p {
+            font-style: italic;
+            margin-bottom: 12px;
+        }
+        .testimonial .author {
+            font-weight: 600;
+            color: #555;
+        }
+        /* Carousel Buttons */
+        .testimonial-container button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: #3498db;
+            color: #fff;
+            border: none;
+            padding: 8px 12px;
             cursor: pointer;
-            transition: background 0.3s;
+            font-size: 1.25rem;
+            border-radius: 4px;
+            opacity: 0.8;
         }
-        .suggestion-btn:hover {
-            background: #e0e0e0;
+        #prev-btn { left: -40px; }
+        #next-btn { right: -40px; }
+        .testimonial-container button:hover {
+            opacity: 1;
         }
-        /* Fade-in animation for bubbles */
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
+        /* Footer */
+        footer {
+            background: #2c3e50;
+            color: #fff;
+            padding: 24px 20px;
+            text-align: center;
         }
-        /* Responsive: full width/height on very small screens */
-        @media (max-width: 400px) {
-            .chat-container { width: 100%; height: 100%; border-radius: 0; }
+        footer nav ul {
+            list-style: none;
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            margin-bottom: 12px;
+        }
+        footer nav a {
+            color: #fff;
+            font-size: 0.95rem;
+        }
+        footer a:hover {
+            text-decoration: underline;
+        }
+        footer p {
+            font-size: 0.9rem;
+        }
+        /* Responsive Queries */
+        @media (max-width: 768px) {
+            .cards-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            .card {
+                flex: 1 1 100%;
+                max-width: 320px;
+            }
+            #prev-btn { left: 10px; }
+            #next-btn { right: 10px; }
         }
     </style>
 </head>
 <body>
-            <li><a href="Ai.html" class="chat-button">💬 Start Chat</a></li>
-    <div class="chat-container" id="chat">
-        <!-- Chat header with title and theme toggle -->
-        <div class="chat-header">
-            <button class="close-btn" onclick="toggleChat()">×</button>
-            <span class="title">ChatBot</span>
-            <div class="mode-toggle">
-                <label>
-                    <input type="checkbox" id="theme-toggle">
-                    <span class="slider"></span>
-                </label>
+    <!-- Header / Navigation -->
+    <header>
+        <div class="logo">Quizzeria</div>
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#categories">Quizzes</a></li>
+                <li><a href="#testimonials">Testimonials</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+    <!-- Hero Banner with CTA -->
+    <section id="hero">
+        <h1>Welcome to Quizzeria</h1>
+        <p>Master your exams with unlimited practice quizzes. Choose from JEE, NEET, Class 10, and Class 11 quiz categories.</p>
+        <button class="btn">Start a Quiz</button>
+    </section>
+    <!-- Quiz Categories Section -->
+    <section id="categories">
+        <h2>Quiz Categories</h2>
+        <div class="cards-container">
+            <div class="card">
+                <h3>JEE (Engineering)</h3>
+                <p>Practice advanced-level questions in Physics, Chemistry, and Math to prepare for the JEE exams.</p>
+                <a class="btn" href="#">Start JEE Quiz</a>
+            </div>
+            <div class="card">
+                <h3>NEET (Medical)</h3>
+                <p>Test your Biology, Chemistry, and Physics knowledge with quizzes designed for NEET aspirants.</p>
+                <a class="btn" href="#">Start NEET Quiz</a>
+            </div>
+            <div class="card">
+                <h3>Class 10</h3>
+                <p>Review core concepts in Mathematics, Science, and Social Studies to ace your Class 10 exams.</p>
+                <a class="btn" href="#">Start Class 10 Quiz</a>
+            </div>
+            <div class="card">
+                <h3>Class 11</h3>
+                <p>Build a strong foundation in Physics, Chemistry, Biology, and Math for Class 11 with these quizzes.</p>
+                <a class="btn" href="#">Start Class 11 Quiz</a>
             </div>
         </div>
-        <!-- Message area -->
-        <div class="chat-window" id="chat-window">
-            <!-- Initial bot greeting -->
-            <div class="chat-bubble bot"><em>Hello! I am an AI Chatbot. You can ask me:</em></div>
+    </section>
+    <!-- Testimonials Carousel (Optional) -->
+    <section id="testimonials">
+        <h2>Student Testimonials</h2>
+        <div class="testimonial-container">
+            <div class="testimonial active">
+                <p>"Quizzeria's quizzes helped me improve my scores dramatically. The explanations are super helpful!"</p>
+                <div class="author">— Anjali, Class 11 Student</div>
+            </div>
+            <div class="testimonial">
+                <p>"The JEE practice tests on Quizzeria are exactly what I needed. Great variety and very challenging." </p>
+                <div class="author">— Rohit, JEE Aspirant</div>
+            </div>
+            <div class="testimonial">
+                <p>"Loved the NEET biology quizzes. They cover all important topics and make learning fun!"</p>
+                <div class="author">— Priya, NEET Aspirant</div>
+            </div>
+            <button id="prev-btn">&#8592;</button>
+            <button id="next-btn">&#8594;</button>
         </div>
-        <!-- FAQ suggestion buttons -->
-        <div class="suggestions" id="suggestions"></div>
-        <!-- Input area -->
-        <div class="input-area">
-            <input type="text" id="user-input" placeholder="Type your message..." autocomplete="off">
-            <button id="send-btn">&#9658;</button>
-        </div>
-    </div>
+    </section>
+    <!-- Footer with Navigation and Contact -->
+    <footer id="contact">
+        <nav>
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#categories">Quizzes</a></li>
+                <li><a href="#testimonials">Testimonials</a></li>
+                <li><a href="#">Privacy</a></li>
+                <li><a href="#">About</a></li>
+            </ul>
+        </nav>
+        <p>Contact us: <a href="mailto:info@quizzeria.com" style="color: #ffffff;">info@quizzeria.com</a></p>
+        <p>&copy; 2025 Quizzeria. All rights reserved.</p>
+    </footer>
     <script>
-        // Predefined questions and answers
-        const qaPairs = {
-            "Hello": "Hi there!",
-            "How are you?": "I'm doing well, thank you!",
-            "What is your name?": "I am ChatBot, your assistant.",
-            "What can you do?": "I can answer your FAQs.",
-            "Tell me a joke": "Why did the developer go broke? Because they used up all their cache!",
-            "Goodbye": "See you later! Have a great day."
-        };
-        const fallback = "Sorry, I don't understand. Please try another question.";
-        // Populate suggestion buttons
-        const suggestions = document.getElementById('suggestions');
-        for (const question of Object.keys(qaPairs)) {
-            const btn = document.createElement('button');
-            btn.className = 'suggestion-btn';
-            btn.textContent = question;
-            btn.onclick = () => {
-                document.getElementById('user-input').value = question;
-                sendMessage();
-            };
-            suggestions.appendChild(btn);
-        }
-        // Get elements
-        const chatWindow = document.getElementById('chat-window');
-        const userInput = document.getElementById('user-input');
-        const sendBtn = document.getElementById('send-btn');
-        const themeToggle = document.getElementById('theme-toggle');
-        const chatContainer = document.getElementById('chat');
-        // Send message on button click or Enter key
-        sendBtn.addEventListener('click', sendMessage);
-        userInput.addEventListener('keydown', function(event) {
-            if (event.key === 'Enter') {
-                event.preventDefault();
-                sendMessage();
+        // Simple JavaScript for testimonial carousel navigation
+        document.addEventListener('DOMContentLoaded', function() {
+            const testimonials = document.querySelectorAll('.testimonial');
+            let currentIndex = 0;
+            function showTestimonial(index) {
+                testimonials.forEach((t, i) => {
+                    t.classList.toggle('active', i === index);
+                });
             }
+            document.getElementById('prev-btn').addEventListener('click', function() {
+                currentIndex = (currentIndex - 1 + testimonials.length) % testimonials.length;
+                showTestimonial(currentIndex);
+            });
+            document.getElementById('next-btn').addEventListener('click', function() {
+                currentIndex = (currentIndex + 1) % testimonials.length;
+                showTestimonial(currentIndex);
+            });
         });
-        // Toggle dark/light theme
-        themeToggle.addEventListener('change', () => {
-            if (themeToggle.checked) {
-                chatContainer.classList.add('dark-mode');
-            } else {
-                chatContainer.classList.remove('dark-mode');
-            }
-        });
-        // Append a message bubble (sender = 'user' or 'bot')
-        function appendMessage(text, sender) {
-            const bubble = document.createElement('div');
-            bubble.className = 'chat-bubble ' + sender;
-            bubble.textContent = text;
-            chatWindow.appendChild(bubble);
-            chatWindow.scrollTop = chatWindow.scrollHeight;
-        }
-        // Play a short tone (isSend=true for send sound, false for receive)
-        function playSound(isSend) {
-            const ctx = new (window.AudioContext || window.webkitAudioContext)();
-            const osc = ctx.createOscillator();
-            const gain = ctx.createGain();
-            osc.connect(gain);
-            gain.connect(ctx.destination);
-            if (isSend) {
-                osc.frequency.value = 600;
-                gain.gain.setValueAtTime(0.2, ctx.currentTime);
-                osc.start();
-                osc.stop(ctx.currentTime + 0.1);
-            } else {
-                osc.frequency.value = 400;
-                gain.gain.setValueAtTime(0.2, ctx.currentTime);
-                osc.start();
-                osc.stop(ctx.currentTime + 0.15);
-            }
-        }
-        // Show typing indicator (three dots) and return the element
-        function showTypingIndicator() {
-            const typing = document.createElement('div');
-            typing.className = 'typing-indicator';
-            typing.innerHTML = '<span></span><span></span><span></span>';
-            chatWindow.appendChild(typing);
-            chatWindow.scrollTop = chatWindow.scrollHeight;
-            return typing;
-        }
-        // Main function to send a message
-        function sendMessage() {
-            const text = userInput.value.trim();
-            if (!text) return;
-            // Display user message bubble
-            appendMessage(text, 'user');
-            playSound(true);
-            userInput.value = '';
-            // Show typing indicator
-            const typingElem = showTypingIndicator();
-            // After a delay, show bot response
-            setTimeout(() => {
-                typingElem.remove();
-                // Case-insensitive matching of user query
-                let answer = fallback;
-                for (const q in qaPairs) {
-                    if (q.toLowerCase() === text.toLowerCase()) {
-                        answer = qaPairs[q];
-                        break;
-                    }
-                }
-                appendMessage(answer, 'bot');
-                playSound(false);
-                userInput.focus();
-            }, 1000 + Math.random() * 1000);
-        }
-        // Optional: Close/open chat container (popup behavior)
-        function toggleChat() {
-            chatContainer.style.display = chatContainer.style.display === 'none' ? 'flex' : 'none';
-        }
     </script>
 </body>
 </html>
