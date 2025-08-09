@@ -1,0 +1,594 @@
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Pro Advanced Chatbot — HTML / CSS / JS</title>
+<style>
+/* ----------------------------------------
+   Pro Chatbot - Single File
+   - Advanced features, offline fixed-QA
+   - User messages on RIGHT, Bot on LEFT
+   - Dark/light theme, persistent settings, fuzzy match,
+     voice input, speech synthesis, save/export, edit/delete,
+     suggestions, quick replies, typing indicator, sounds, animations,
+     draggable popup, accessibility enhancements.
+   - No external libs — run directly in browser.
+   ----------------------------------------*/
+
+/* Reset + base */
+:root{
+  --bg:#f3f6fb;
+  --panel:#ffffff;
+  --muted:#7b8794;
+  --accent-start:#4facfe;
+  --accent-end:#00f2fe;
+  --user-grad: linear-gradient(135deg,var(--accent-start),var(--accent-end));
+  --bot-bg:#f1f3f5;
+  --radius:14px;
+  --shadow: 0 6px 20px rgba(12,22,40,0.08);
+  --glass: rgba(255,255,255,0.6);
+  --success:#16a34a;
+  --danger:#ef4444;
+}
+body.dark{
+  --bg:#0b1220;
+  --panel:#0f1724;
+  --muted:#9fb2c8;
+  --accent-start:#0f1724;
+  --accent-end:#0b6bff;
+  --user-grad: linear-gradient(135deg,#1f8ef1,#5f27cd);
+  --bot-bg:#111827;
+  --glass: rgba(255,255,255,0.03);
+  --shadow: 0 10px 30px rgba(2,6,23,0.6);
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  background: radial-gradient(1200px 600px at 10% 10%, rgba(79,172,254,0.06), transparent),
+              radial-gradient(800px 400px at 90% 90%, rgba(95,39,205,0.04), transparent),
+              var(--bg);
+  color: var(--text, #0b1220);
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap:20px;
+  padding:28px;
+}
+
+/* App shell width tuned to mobile/tablet */
+.app-frame{
+  width: 380px;
+  max-width: calc(100% - 48px);
+  height: 680px;
+  border-radius: var(--radius);
+  background: linear-gradient(180deg, rgba(255,255,255,0.6), rgba(255,255,255,0.35));
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  display:flex;
+  flex-direction: column;
+  position: relative;
+  border: 1px solid rgba(12,22,40,0.04);
+}
+body.dark .app-frame{
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border: 1px solid rgba(255,255,255,0.03);
+}
+
+/* Header */
+.header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:12px 14px;
+  gap:12px;
+  background: linear-gradient(90deg,var(--accent-start),var(--accent-end));
+  color: #fff;
+}
+.header .title{
+  display:flex;
+  gap:10px;
+  align-items:center;
+  font-weight:700;
+  font-size:16px;
+}
+.logo{
+  width:36px;height:36px;border-radius:10px;
+  background: linear-gradient(135deg, rgba(255,255,255,0.12), rgba(255,255,255,0.05));
+  display:flex;align-items:center;justify-content:center;font-weight:700;
+  box-shadow: 0 4px 14px rgba(79,172,254,0.12);
+}
+.header .controls{
+  display:flex;align-items:center;gap:8px;
+}
+.icon-btn{
+  background: transparent;border: none;color:inherit;padding:8px;border-radius:8px;cursor:pointer;
+  display:inline-flex;align-items:center;justify-content:center;
+}
+.icon-btn:hover{ background: rgba(255,255,255,0.06) }
+.icon-btn:active{ transform:translateY(1px) }
+
+/* Main chat area */
+.chat-area{
+  flex:1;
+  background: var(--panel);
+  padding:12px;
+  display:flex;
+  flex-direction:column;
+  gap:10px;
+  overflow:hidden;
+}
+.conversation{
+  flex:1;
+  overflow:auto;
+  padding:8px;
+  display:flex;
+  flex-direction:column;
+  gap:8px;
+  scroll-behavior: smooth;
+}
+
+/* Bubbles */
+.bubble{
+  max-width:78%;
+  padding:10px 14px;
+  border-radius: 14px;
+  box-shadow: 0 4px 18px rgba(2,6,23,0.04);
+  animation: popIn 220ms ease;
+  word-break: break-word;
+  line-height:1.35;
+  font-size:14px;
+}
+@keyframes popIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+
+.bubble.bot{
+  align-self:flex-start;
+  background: var(--bot-bg);
+  color: var(--text, #0b1220);
+  border-bottom-left-radius:6px;
+}
+.bubble.user{
+  align-self:flex-end;
+  background: var(--user-grad);
+  color: #fff;
+  border-bottom-right-radius:6px;
+  box-shadow: 0 8px 28px rgba(15,95,255,0.12);
+}
+
+/* Small meta row (for actions like edit/delete/copy) */
+.actions{
+  margin-top:6px;
+  display:flex;gap:8px;align-items:center;font-size:12px;color:var(--muted);
+}
+.msg-actions button{
+  background:transparent;border:none;color:var(--muted);cursor:pointer;padding:4px;border-radius:6px;font-size:12px;
+}
+.msg-actions button:hover{ background: rgba(0,0,0,0.04) }
+
+/* Typing indicator */
+.typing{
+  display:inline-flex;gap:6px;padding:8px 10px;border-radius:12px;background:var(--bot-bg);
+  align-items:center;
+}
+.typing .dot{
+  width:8px;height:8px;border-radius:50%;background:var(--muted);animation: typing 1s infinite;
+}
+.typing .dot:nth-child(2){ animation-delay:0.15s }
+.typing .dot:nth-child(3){ animation-delay:0.3s }
+@keyframes typing{
+  0%{ transform:translateY(0); opacity:0.25 }
+  50%{ transform:translateY(-6px); opacity:1 }
+  100%{ transform:translateY(0); opacity:0.25 }
+}
+
+/* Suggestion / quick replies */
+.suggestions{
+  display:flex;gap:8px;flex-wrap:wrap;padding:8px 4px;
+}
+.suggest-btn{
+  border-radius:999px;padding:8px 12px;border:1px solid rgba(12,22,40,0.06);
+  background: linear-gradient(180deg, rgba(255,255,255,0.85), rgba(255,255,255,0.6));
+  color:var(--muted);cursor:pointer;font-size:13px;
+}
+body.dark .suggest-btn{
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  color:var(--muted);
+}
+.suggest-btn:hover{ transform:translateY(-3px); transition:transform 160ms }
+
+/* Input area */
+.input-row{
+  display:flex;align-items:center;gap:8px;padding:10px;border-top:1px solid rgba(0,0,0,0.04);
+  background: linear-gradient(180deg, rgba(255,255,255,0.6), transparent);
+}
+.body-dark .input-row{ background:transparent; }
+.input{
+  flex:1;display:flex;gap:8px;align-items:center;padding:8px 10px;border-radius:999px;background:var(--glass);
+  border:1px solid rgba(12,22,40,0.04);
+}
+.input textarea{
+  width:100%;border:none;resize:none;background:transparent;padding:8px 6px;font-size:14px;color:inherit;outline:none;
+  max-height:120px;line-height:1.35;
+}
+.send-btn{
+  background:linear-gradient(135deg,var(--accent-start),var(--accent-end));border:none;color:white;padding:10px 12px;border-radius:10px;cursor:pointer;
+  display:inline-flex;align-items:center;justify-content:center;box-shadow:0 6px 20px rgba(79,172,254,0.12);
+}
+.send-btn:active{ transform:translateY(1px) }
+
+/* Utility panels */
+.panel{
+  position:absolute;right:12px;top:68px;width:300px;background:var(--panel);border-radius:12px;padding:10px;
+  box-shadow: var(--shadow);border:1px solid rgba(12,22,40,0.04);z-index:80;
+}
+.panel h3{margin:0 0 8px 0;font-size:14px}
+.panel .row{display:flex;gap:8px;align-items:center;margin:8px 0}
+
+/* Footer tiny text */
+.footer-note{ font-size:12px;color:var(--muted);text-align:center;padding:8px }
+
+/* Responsive */
+@media (max-width:420px){
+  .app-frame{ width:100%; height:100%; border-radius:0; }
+  .panel{ right:8px; width:calc(100% - 48px) }
+}
+
+/* Accessibility focus */
+.icon-btn:focus, .send-btn:focus, .suggest-btn:focus, .msg-actions button:focus { outline:2px solid rgba(79,172,254,0.22) }
+
+/* Drag handle */
+.drag-handle{ position:absolute; left:12px; top:10px; width:120px; height:28px; color:transparent; cursor:grab; -webkit-user-select:none; user-select:none }
+.drag-handle:active{ cursor:grabbing }
+
+/* Tiny badge */
+.badge{ background:var(--danger); color:white;padding:4px 6px;border-radius:999px;font-size:12px; }
+
+/* subtle glass blur behind UI (if supported) */
+@supports ((-webkit-backdrop-filter: blur(6px)) or (backdrop-filter: blur(6px))) {
+  .app-frame{ background: linear-gradient(180deg, rgba(255,255,255,0.45), rgba(255,255,255,0.25)); -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
+  body.dark .app-frame{ background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01)); }
+}
+</style>
+</head>
+<body>
+  <div class="app-frame" id="app" role="application" aria-label="Advanced Chatbot">
+    <div class="drag-handle" id="drag" aria-hidden="true"></div>
+    <header class="header">
+      <div class="title">
+        <div class="logo">PB</div>
+        <div>
+          ProBot
+          <div style="font-size:12px;color:rgba(255,255,255,0.9);font-weight:500">Advanced Offline AI</div>
+        </div>
+      </div>
+      <div class="controls">
+        <button class="icon-btn" id="open-settings" title="Settings" aria-label="Open settings">⚙️</button>
+        <button class="icon-btn" id="minimize" title="Minimize" aria-label="Minimize">━</button>
+      </div>
+    </header>
+
+    <!-- Chat area -->
+    <main class="chat-area" id="chatArea">
+      <div class="conversation" id="conversation" aria-live="polite"></div>
+
+      <!-- suggestions -->
+      <div class="suggestions" id="suggestionsRow" aria-hidden="false"></div>
+
+      <!-- input -->
+      <div class="input-row">
+        <div class="input" role="search">
+          <textarea id="inputBox" rows="1" placeholder="Type your message... (Press Enter to send)" aria-label="Message input"></textarea>
+        </div>
+        <button class="send-btn" id="sendBtn" aria-label="Send message">➤</button>
+      </div>
+    </main>
+
+    <div class="footer-note">Offline fixed-QA • User messages on right • Bot replies left</div>
+
+    <!-- Settings panel (hidden by default) -->
+    <aside class="panel" id="settingsPanel" style="display:none" aria-hidden="true">
+      <h3>Settings</h3>
+      <div class="row">
+        <label style="flex:1">Dark Mode
+          <input type="checkbox" id="themeSwitch" style="margin-left:8px" />
+        </label>
+      </div>
+      <div class="row">
+        <label style="flex:1">Voice Input
+          <input type="checkbox" id="voiceSwitch" style="margin-left:8px" />
+        </label>
+      </div>
+      <div class="row">
+        <label style="flex:1">Speech Output
+          <input type="checkbox" id="speechSwitch" style="margin-left:8px" />
+        </label>
+      </div>
+      <div class="row">
+        <button id="clearBtn" style="flex:1;padding:8px;border-radius:10px;border:1px solid rgba(0,0,0,0.06)">Clear Chat</button>
+      </div>
+      <div class="row">
+        <button id="exportBtn" style="flex:1;padding:8px;border-radius:10px;background:linear-gradient(90deg,var(--accent-start),var(--accent-end));color:white;border:none">Export Chat</button>
+      </div>
+      <div class="row">
+        <input type="file" id="importFile" accept="application/json" style="flex:1" />
+      </div>
+      <div style="font-size:12px;color:var(--muted);margin-top:8px">Pro features: fuzzy matching, quick-replies, edit/delete messages, local persistence.</div>
+    </aside>
+  </div>
+
+<script>
+/* ----------------------------------------
+   JavaScript: ProBot capabilities
+   - Fixed Q/A pairs (editable in code below)
+   - Fuzzy matching (Levenshtein + keyword score)
+   - Persistence: localStorage for messages and settings
+   - Voice input (Web Speech) + TTS (speechSynthesis)
+   - Message editing, deleting, copying
+   - Export/Import chat JSON
+   - Quick replies & suggestion chips
+   - Audio feedback (synth tones)
+   - Prevent empty messages, debouncing, rate limit
+   - No timestamps (per request)
+   ----------------------------------------*/
+
+/* ---------------------------
+   Configuration & Data
+   --------------------------- */
+const DEFAULT_QA = [
+  { q: "hello", a: "Hi! 👋 How can I help you today?" },
+  { q: "how are you", a: "I'm just code, but I'm doing great! 😊" },
+  { q: "what is your name", a: "I am ProBot — your offline assistant." },
+  { q: "what can you do", a: "I answer fixed Q&A, support fuzzy matching, voice, export/import, edit/delete, and more." },
+  { q: "tell me a joke", a: "Why do programmers prefer dark mode? Because light attracts bugs! 🐛" },
+  { q: "goodbye", a: "Bye! Take care." },
+  { q: "help", a: "Try sample suggestions or ask something simple like \"hello\" or \"tell me a joke\"." }
+];
+
+const STORAGE_KEYS = {
+  MESSAGES: "probot_messages_v2",
+  SETTINGS: "probot_settings_v2",
+  QA: "probot_qa_v2"
+};
+
+const RATE_LIMIT_MS = 800; // minimal delay between sends (prevent accidental spam)
+
+/* ---------------------------
+   App State
+   --------------------------- */
+let QA = loadQa() || DEFAULT_QA.slice();
+let messages = loadMessages() || [
+  { id: genId(), role: "bot", content: "Hello! I'm ProBot — ask me something or try the quick suggestions." }
+];
+let lastSent = 0;
+let typingTimeout = null;
+let speechRecognition = null;
+let voiceActive = false;
+
+/* ---------------------------
+   Helpers
+   --------------------------- */
+function genId(){ return "m_" + Math.random().toString(36).slice(2,9) }
+
+function saveMessages(){
+  try{ localStorage.setItem(STORAGE_KEYS.MESSAGES, JSON.stringify(messages)) } catch(e){}
+}
+function loadMessages(){
+  try{
+    const raw = localStorage.getItem(STORAGE_KEYS.MESSAGES);
+    return raw ? JSON.parse(raw) : null;
+  }catch(e){ return null }
+}
+function saveSettings(s){
+  try{ localStorage.setItem(STORAGE_KEYS.SETTINGS, JSON.stringify(s)) }catch(e){}
+}
+function loadSettings(){
+  try{ const r = localStorage.getItem(STORAGE_KEYS.SETTINGS); return r ? JSON.parse(r) : {} }catch(e){ return {}}
+}
+function saveQa(){ try{ localStorage.setItem(STORAGE_KEYS.QA, JSON.stringify(QA)) }catch(e){} }
+function loadQa(){ try{ const r = localStorage.getItem(STORAGE_KEYS.QA); return r ? JSON.parse(r) : null }catch(e){ return null }
+
+/* ---------------------------
+   DOM references
+   --------------------------- */
+const conv = document.getElementById("conversation");
+const inputBox = document.getElementById("inputBox");
+const sendBtn = document.getElementById("sendBtn");
+const suggestionsRow = document.getElementById("suggestionsRow");
+const settingsPanel = document.getElementById("settingsPanel");
+const openSettingsBtn = document.getElementById("open-settings");
+const themeSwitch = document.getElementById("themeSwitch");
+const voiceSwitch = document.getElementById("voiceSwitch");
+const speechSwitch = document.getElementById("speechSwitch");
+const clearBtn = document.getElementById("clearBtn");
+const exportBtn = document.getElementById("exportBtn");
+const importFile = document.getElementById("importFile");
+const minimizeBtn = document.getElementById("minimize");
+const appEl = document.getElementById("app");
+const dragHandle = document.getElementById("drag");
+
+/* ---------------------------
+   Initialize UI & event wiring
+   --------------------------- */
+function init(){
+  // Render initial messages & suggestions
+  renderAllMessages();
+  renderSuggestions();
+
+  // Load settings
+  const settings = loadSettings();
+  if(settings.theme === "dark") document.body.classList.add("dark");
+  themeSwitch.checked = document.body.classList.contains("dark");
+  voiceSwitch.checked = !!settings.voiceInput;
+  speechSwitch.checked = !!settings.speechOutput;
+
+  // Event listeners
+  sendBtn.addEventListener("click", onSend);
+  inputBox.addEventListener("keydown", onKeyDown);
+  openSettingsBtn.addEventListener("click", toggleSettings);
+  themeSwitch.addEventListener("change", onThemeToggle);
+  voiceSwitch.addEventListener("change", onVoiceToggle);
+  speechSwitch.addEventListener("change", onSpeechToggle);
+  clearBtn.addEventListener("click", clearChat);
+  exportBtn.addEventListener("click", exportChat);
+  importFile.addEventListener("change", importChatFile);
+  minimizeBtn.addEventListener("click", toggleMinimize);
+
+  // Accessibility: focus
+  inputBox.focus();
+
+  // Dragging
+  makeDraggable(appEl, dragHandle);
+
+  // Setup voice if requested
+  if(voiceSwitch.checked) initSpeechRecognition();
+
+  // Save initial state
+  saveMessages();
+  saveQa();
+}
+
+// Renders conversations
+function renderAllMessages(){
+  conv.innerHTML = "";
+  messages.forEach(msg => renderMessage(msg));
+  conv.scrollTop = conv.scrollHeight;
+}
+
+// Create bubble + actions
+function renderMessage(msg){
+  const el = document.createElement("div");
+  el.className = "message-wrapper";
+  // bubble
+  const bubble = document.createElement("div");
+  bubble.className = "bubble " + (msg.role === "user" ? "user":"bot");
+  bubble.setAttribute("data-id", msg.id);
+  bubble.innerText = msg.content;
+  bubble.tabIndex = 0;
+  bubble.setAttribute("role","article");
+  bubble.setAttribute("aria-label", msg.role === "user" ? "Your message" : "Bot message");
+
+  // actions (edit, delete, copy)
+  const actions = document.createElement("div");
+  actions.className = "actions msg-actions";
+  // for user messages allow edit/delete
+  if(msg.role === "user"){
+    const btnEdit = document.createElement("button");
+    btnEdit.textContent = "Edit";
+    btnEdit.title = "Edit message";
+    btnEdit.onclick = () => editMessage(msg.id);
+    actions.appendChild(btnEdit);
+
+    const btnDel = document.createElement("button");
+    btnDel.textContent = "Delete";
+    btnDel.title = "Delete message";
+    btnDel.onclick = () => deleteMessage(msg.id);
+    actions.appendChild(btnDel);
+  }
+  // copy for all
+  const btnCopy = document.createElement("button");
+  btnCopy.textContent = "Copy";
+  btnCopy.title = "Copy message";
+  btnCopy.onclick = () => copyToClipboard(msg.content);
+  actions.appendChild(btnCopy);
+
+  // reveal actions on hover / focus
+  bubble.onfocus = () => actions.style.opacity = 1;
+  bubble.onblur = () => actions.style.opacity = 0.85;
+  actions.style.opacity = 0.85;
+
+  // assemble
+  el.appendChild(bubble);
+  el.appendChild(actions);
+  conv.appendChild(el);
+  conv.scrollTop = conv.scrollHeight;
+}
+
+/* ---------------------------
+   Message actions
+   --------------------------- */
+function editMessage(id){
+  const idx = messages.findIndex(m => m.id === id);
+  if(idx === -1) return;
+  const m = messages[idx];
+  if(m.role !== "user") return;
+  // set text into input, focus, and remove message (user will re-send)
+  inputBox.value = m.content;
+  inputBox.focus();
+  // remove the message (user likely wants to replace)
+  messages.splice(idx,1);
+  saveMessages();
+  renderAllMessages();
+}
+
+function deleteMessage(id){
+  const idx = messages.findIndex(m => m.id === id);
+  if(idx === -1) return;
+  messages.splice(idx,1);
+  saveMessages();
+  renderAllMessages();
+}
+
+function copyToClipboard(text){
+  navigator.clipboard?.writeText(text).then(()=> {
+    flashToast("Copied to clipboard");
+  }).catch(()=>flashToast("Copy failed"));
+}
+
+/* ---------------------------
+   Send / Receive
+   --------------------------- */
+function onKeyDown(e){
+  // Enter sends, Shift+Enter new line
+  if(e.key === "Enter" && !e.shiftKey){
+    e.preventDefault();
+    onSend();
+  } else {
+    // auto grow
+    requestAnimationFrame(() => {
+      inputBox.style.height = "auto";
+      inputBox.style.height = Math.min(140, inputBox.scrollHeight) + "px";
+    });
+  }
+}
+
+function onSend(){
+  const now = Date.now();
+  if(now - lastSent < RATE_LIMIT_MS) return; // rate limit
+  const text = inputBox.value.trim();
+  if(!text) return;
+  lastSent = now;
+
+  // add user message
+  const userMsg = { id: genId(), role: "user", content: text };
+  messages.push(userMsg);
+  saveMessages();
+  renderMessage(userMsg);
+  inputBox.value = "";
+  inputBox.style.height = "auto";
+  playTone(true);
+
+  // show typing indicator and prepare bot reply
+  showTyping();
+  // simulate thinking time proportional to length but bounded
+  const delay = Math.min(1500 + text.length * 20, 2200);
+  clearTimeout(typingTimeout);
+  typingTimeout = setTimeout(() => {
+    hideTyping();
+    const reply = findAnswer(text);
+    const botMsg = { id: genId(), role: "bot", content: reply };
+    messages.push(botMsg);
+    saveMessages();
+    renderMessage(botMsg);
+    playTone(false);
+    // optionally speak
+    const settings = loadSettings();
+    if(settings.speechOutput) speakText(reply);
+  }, delay);
+}
+
+/* ---------------------------
+   Typing indicator
+   --
