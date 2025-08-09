@@ -208,6 +208,7 @@
             padding:6px 10px;
             top:auto;
             bottom:-40px;
+        }
         .testimonial-container button:hover {
             opacity: 1;
         }
@@ -352,6 +353,21 @@
                 currentIndex = (currentIndex + 1) % testimonials.length;
                 showTestimonial(currentIndex);
             });
+            // Smooth Scroll for N
+document.querySelectorAll('nav a').forEach(link => {
+    link.addEventListener('click', function(e) {
+        if (this.hash) {
+            e.preventDefault();
+            document.querySelector(this.hash).scrollIntoView({ behavior: 'smooth' });
+        }
+    });
+});
+
+// Auto-rotate Testimonials every 4s
+setInterval(() => {
+    currentIndex = (currentIndex + 1) % testimonials.length;
+    showTestimonial(currentIndex);
+}, 4000);
         });
     </script>
 </body>
