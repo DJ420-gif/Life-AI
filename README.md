@@ -63,15 +63,15 @@
             background: linear-gradient(135deg, #3498db, #2ecc71);
             color: #fff;
             text-align: center;
-            padding: 80px 20px;
+            padding: 50px 15px;
         }
         #hero h1 {
-            font-size: 2.5rem;
+            font-size: 1.8rem;
             margin-bottom: 16px;
         }
         #hero p {
-            font-size: 1.125rem;
-            margin-bottom: 24px;
+            font-size: 1rem;
+            margin-bottom: 05px;
             max-width: 600px;
             margin-left: auto;
             margin-right: auto;
@@ -79,8 +79,8 @@
         #hero .btn {
             background-color: #e67e22;
             color: #fff;
-            padding: 12px 24px;
-            font-size: 1.125rem;
+            padding: 10px 18px;
+            font-size: 1rem;
             border: none;
             border-radius: 4px;
             cursor: pointer;
@@ -105,20 +105,23 @@
         .cards-container {
             display: flex;
             flex-wrap: wrap;
+            flex-direction:column;
+            align-items:centre;
             gap: 24px;
             justify-content: center;
         }
         .card {
             background: #fff;
             border-radius: 8px;
-            padding: 24px;
+            padding: 18px;
             box-shadow: 0 2px 6px rgba(0,0,0,0.1);
             flex: 1 1 calc(45% - 24px);
             min-width: 260px;
-            max-width: 400px;
+            max-width: 100%;
             display: flex;
             flex-direction: column;
             align-items: center;
+            text-align:centre;
             transition: transform 0.3s, box-shadow 0.3s;
         }
         .card:hover {
@@ -127,11 +130,12 @@
         }
         .card h3 {
             font-family: 'Roboto', sans-serif;
-            font-size: 1.5rem;
+            font-size: 1.3rem;
             margin-bottom: 12px;
             color: #2c3e50;
         }
         .card p {
+            font-size:0.95rem
             flex-grow: 1;
             text-align: center;
             margin-bottom: 16px;
@@ -155,7 +159,7 @@
         }
         #testimonials h2 {
             font-family: 'Roboto', sans-serif;
-            font-size: 2rem;
+            font-size: 1.5rem;
             text-align: center;
             margin-bottom: 32px;
             color: #2c3e50;
@@ -168,9 +172,10 @@
         .testimonial {
             display: none;
             background: #fff;
-            padding: 24px;
+            padding: 18px;
             border-radius: 8px;
             text-align: center;
+            font-size:0.95rem;
             box-shadow: 0 2px 6px rgba(0,0,0,0.1);
         }
         .testimonial.active {
@@ -198,8 +203,12 @@
             border-radius: 4px;
             opacity: 0.8;
         }
-        #prev-btn { left: -40px; }
-        #next-btn { right: -40px; }
+        #prev-btn,#next-btn {
+            font-size:1rem;
+            padding:6px 10px;
+            top:auto;
+            bottom:-40px;
+        }
         .testimonial-container button:hover {
             opacity: 1;
         }
@@ -339,7 +348,22 @@
                 currentIndex = (currentIndex + 1) % testimonials.length;
                 showTestimonial(currentIndex);
             });
+            // Smooth Scroll for N
+document.querySelectorAll('nav a').forEach(link => {
+    link.addEventListener('click', function(e) {
+        if (this.hash) {
+            e.preventDefault();
+            document.querySelector(this.hash).scrollIntoView({ behavior: 'smooth' });
+        }
+    });
+});
+
+// Auto-rotate Testimonials every 4s
+setInterval(() => {
+    currentIndex = (currentIndex + 1) % testimonials.length;
+    showTestimonial(currentIndex);
+}, 4000);
         });
     </script>
 </body>
-</html>
+            </html>
