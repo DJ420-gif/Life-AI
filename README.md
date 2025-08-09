@@ -1,4 +1,4 @@
-<html lang="en" >.
+<html lang="en" >
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -19,9 +19,10 @@
     }
     #chat-container {
       background: #252b36;
-      width: 100%; max-width: 450px;
-      height: 600px;
-      border-radius: 12px;
+  width: 100vw;
+  height: 100vh;
+  max-width: none;
+  border-radius: 0;
       box-shadow: 0 10px 40px rgba(0,0,0,0.5);
       display: flex;
       flex-direction: column;
@@ -50,7 +51,7 @@
     /* Messages */
     .message {
       max-width: 75%;
-      padding: 14px 18px;
+      padding: 18px 22px;
       border-radius: 20px;
       font-size: 1rem;
       line-height: 1.4;
@@ -82,7 +83,7 @@
         transform: translateY(0);
       }
     }
-    /* Fixed questions area */
+    /* Fixed questions area */   
     #fixed-questions {
       padding: 12px 20px;
       background: #2f3640;
@@ -118,10 +119,10 @@
     }
     #user-input {
       flex: 1;
-      padding: 14px 18px;
+      padding: 16px 20px;
       border-radius: 30px;
       border: none;
-      font-size: 1rem;
+      font-size: 1.1rem;
       outline: none;
       background: #394152;
       color: #eee;
@@ -133,17 +134,17 @@
       font-weight: 400;
     }
     #user-input:focus {
-      background: #46505f;
+    background: #46505f;
     }
     #send-btn {
       margin-left: 12px;
       background: #3b82f6;
       border: none;
-      padding: 0 24px;
+      padding: 16px 20px;
       border-radius: 30px;
       color: white;
       font-weight: 700;
-      font-size: 1rem;
+      font-size: 1.1rem;
       cursor: pointer;
       transition: background-color 0.25s ease;
       user-select: none;
@@ -153,7 +154,8 @@
       background: #2563eb;
       outline: none;
     }
-    /* Typing indicator */
+
+   /* Typing indicator */
     #typing-indicator {
       align-self: flex-start;
       display: flex;
@@ -183,7 +185,8 @@
       }
     }
     /* Scrollbar styling */
-    #chat-window::-webkit-scrollbar {
+
+   #chat-window::-webkit-scrollbar {
       width: 6px;
     }
     #chat-window::-webkit-scrollbar-track {
@@ -339,4 +342,4 @@
 </script>
 
 </body>
-</html>
+                                                          </html>
